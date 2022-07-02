@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Место</title>
+    <link rel="stylesheet" href="./pages/index.css">
+  </head>
+  <body class="page">
+    
+    <header class="header page__header">
+        <img class="header__logo" src="./images/logo.svg" alt="Логотип">
+    </header>
+    <main class="main page__main">
+        <section class="profile main__profile">
+          <img class="profile__avatar" src="./images/Jacques-Yves_Cousteau.png" alt="Аватар профиля.">
+          <div class="profile__info">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="profile__edit-button"></button>
+            <p class="profile__description">Исследователь океана</p>
+          </div>
+          <button class="profile__add-button"></button>
+        </section>
+        <section class="main__gallery">
+          <ul class="gallery">
+            <li class="gallery__item">
+              <div class="gallery__image-container">
+                <img class="gallery__image" src="./images/klingking_beach.jpg" alt="Пляж Клингкинг"></div>
+              <div class="gallery__item_content">
+                <p class="gallery__title">Пляж Клингкинг</p>
+                <button class="gallery__like"></button>
+                </div>
+            </li>
+            <li class="gallery__item">
+              <div class="gallery__image-container">
+                <img class="gallery__image" src="./images/nusa_penida.jpg" alt="Нуса Пенида"></div>
+              <div class="gallery__item_content">
+                <p class="gallery__title">Нуса Пенида</p>
+                <button class="gallery__like"></button></div>
+            </li>
+            <li class="gallery__item">
+              <div class="gallery__image-container">
+                <img class="gallery__image" src="./images/pura_lempuang.jpg" alt="Пура Лемпуанг"></div>
+              <div class="gallery__item_content">
+                <p class="gallery__title">Пура Лемпуанг</p>
+                <button class="gallery__like"></button></div>
+            </li>
+            <li class="gallery__item">
+              <div class="gallery__image-container">
+                <img class="gallery__image" src="./images/secumpul_waterfall.jpg" alt="Водопад Секумпул"></div>
+              <div class="gallery__item_content">
+                <p class="gallery__title">Водопад Секумпул</p>
+                <button class="gallery__like"></button></div>
+            </li>
+            <li class="gallery__item">
+              <div class="gallery__image-container">
+                <img class="gallery__image" src="./images/tegallalang.jpg" alt="Тегаллаланг"></div>
+              <div class="gallery__item_content">
+                <p class="gallery__title">Тегаллаланг</p>
+                <button class="gallery__like"></button></div>
+            </li>
+            <li class="gallery__item">
+              <div class="gallery__image-container">
+                <img class="gallery__image" src="./images/unut_dalu_beratan_temle.jpg" alt="Храм Унут Далу Бератан"></div>
+              <div class="gallery__item_content">
+                <p class="gallery__title">Храм Унут Далу Бератан</p>
+                <button class="gallery__like"></button></div>
+            </li>
+          </ul>
+        </section>
+    </main>
+    <footer class="footer page__footer">
+      <p class="footer__copyright">© 2020 Mesto Russia</p>
+    </footer>
+    <section class="popup popup_is-closed">
+        <div class="popup__container">
+          <button class="popup__close"></button>  
+          <h1 class="popup__title">Редактировать профиль</h1>
+          <form class="popup__form">
+            <input class="popup__input-line popup__input-line_name" type="text" name="name" placeholder="Жак-Ив Кусто" value><br>
+            <input class="popup__input-line popup__input-line_job" type="text" name="profession" placeholder="Исследователь океана" value><br>
+            <button class="popup__save-button" type="submit">Сохранить</button>
+          </form>
+          
+        </div>
+    </section>
+    <script src="./scripts/index.js"></script>
+  </body>
+</html>  
