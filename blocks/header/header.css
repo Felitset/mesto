@@ -3,5 +3,6 @@
   max-width: 880px;
   display: flex;
   min-height: 74px;
-  border-bottom: 1px #545454 solid;
+  border-bottom: 1px rgba(84, 84, 84, 0.7) solid;
+  margin-bottom: 38px;
 }

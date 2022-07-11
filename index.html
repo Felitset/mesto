@@ -17,55 +17,49 @@
           <img class="profile__avatar" src="./images/Jacques-Yves_Cousteau.png" alt="Аватар профиля.">
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button"></button>
-            <p class="profile__description">Исследователь океана</p>
+            <button class="profile__edit-button" type="button"></button>
+            <h2 class="profile__description">Исследователь океана</h2>
           </div>
-          <button class="profile__add-button"></button>
+          <button class="profile__add-button" type="button"></button>
         </section>
         <section class="main__gallery">
           <ul class="gallery">
             <li class="gallery__item">
-              <div class="gallery__image-container">
-                <img class="gallery__image" src="./images/argentina.jpeg" alt="Природный пейзаж. Аргентина."></div>
+              <img class="gallery__image" src="./images/argentina.jpeg" alt="Природный пейзаж. Аргентина.">
               <div class="gallery__item-content">
-                <p class="gallery__title">Аргентина</p>
-                <button class="gallery__like"></button>
-                </div>
+                <h2 class="gallery__title">Аргентина</h2>
+                <button class="gallery__like" type="button"></button>
+              </div>
             </li>
             <li class="gallery__item">
-              <div class="gallery__image-container">
-                <img class="gallery__image" src="./images/australia.jpeg" alt="Природный пейзаж. Австралия."></div>
+              <img class="gallery__image" src="./images/australia.jpeg" alt="Природный пейзаж. Австралия.">
               <div class="gallery__item-content">
-                <p class="gallery__title">Австралия</p>
-                <button class="gallery__like"></button></div>
+                <h2 class="gallery__title">Австралия</h2>
+                <button class="gallery__like" type="button"></button></div>
             </li>
             <li class="gallery__item">
-              <div class="gallery__image-container">
-                <img class="gallery__image" src="./images/bali.jpeg" alt="Природный пейзаж. Индонезия, Бали."></div>
+              <img class="gallery__image" src="./images/bali.jpeg" alt="Природный пейзаж. Индонезия, Бали.">
               <div class="gallery__item-content">
-                <p class="gallery__title">Индонезия, о. Бали</p>
-                <button class="gallery__like"></button></div>
+                <h2 class="gallery__title">Индонезия, о. Бали</h2>
+                <button class="gallery__like" type="button"></button></div>
             </li>
             <li class="gallery__item">
-              <div class="gallery__image-container">
-                <img class="gallery__image" src="./images/iceland.jpeg" alt="Природный пейзаж. Исландия."></div>
+              <img class="gallery__image" src="./images/iceland.jpeg" alt="Природный пейзаж. Исландия.">
               <div class="gallery__item-content">
-                <p class="gallery__title">Исландия</p>
-                <button class="gallery__like"></button></div>
+                <h2 class="gallery__title">Исландия</h2>
+                <button class="gallery__like" type="button"></button></div>
             </li>
             <li class="gallery__item">
-              <div class="gallery__image-container">
-                <img class="gallery__image" src="./images/sibyria.jpeg" alt="Природный пейзаж. Россия, Сибирь."></div>
+              <img class="gallery__image" src="./images/sibyria.jpeg" alt="Природный пейзаж. Россия, Сибирь.">
               <div class="gallery__item-content">
-                <p class="gallery__title">Россия, Сибирь</p>
-                <button class="gallery__like"></button></div>
+                <h2 class="gallery__title">Россия, Сибирь</h2>
+                <button class="gallery__like" type="button"></button></div>
             </li>
             <li class="gallery__item">
-              <div class="gallery__image-container">
-                <img class="gallery__image" src="./images/new_zeland.jpeg" alt="Природный пейзаж. Новая Зеландия."></div>
+              <img class="gallery__image" src="./images/new_zeland.jpeg" alt="Природный пейзаж. Новая Зеландия.">
               <div class="gallery__item-content">
-                <p class="gallery__title">Новая Зеландия</p>
-                <button class="gallery__like"></button></div>
+                <h2 class="gallery__title">Новая Зеландия</h2>
+                <button class="gallery__like" type="button"></button></div>
             </li>
           </ul>
         </section>
@@ -73,18 +67,18 @@
     <footer class="footer page__footer">
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
-    <section class="popup popup_is-closed">
+    <div class="popup popup_is-closed">
         <div class="popup__container">
-          <button class="popup__close"></button>  
-          <h1 class="popup__title">Редактировать профиль</h1>
-          <form class="popup__form">
-            <input class="popup__input-line popup__input-line_name" type="text" name="name" placeholder="Жак-Ив Кусто" value>
-            <input class="popup__input-line popup__input-line_job" type="text" name="profession" placeholder="Исследователь океана" value>
+          <button class="popup__close" type="button"></button>  
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <form class="popup__form" name="popup_form">
+            <input class="popup__input popup__input_type_name" type="text" name="name" placeholder="Жак-Ив Кусто">
+            <input class="popup__input popup__input_type_name" type="text" name="profession" placeholder="Исследователь океана">
             <button class="popup__save-button" type="submit">Сохранить</button>
           </form>
           
         </div>
-    </section>
+    </div>
     <script src="./scripts/index.js"></script>
   </body>
 </html>  

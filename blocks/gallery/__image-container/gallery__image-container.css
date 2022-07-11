@@ -1,9 +1,0 @@
-.gallery__image-container {
-  /* height: 282px;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  object-fit: fill; */
-  overflow: hidden;
-  width: 100%;
-}
