@@ -28,12 +28,14 @@ const closePopup = function() {
 popupCloseButtonElement.addEventListener('click', closePopup);
 popupOpenButtonElement.addEventListener('click', openPopup);
 
+let nameInput = document.querySelector("input[name='name']");
+let jobInput = document.querySelector("input[name='profession']");
+
 function formSubmitHandler(evt) {
   evt.preventDefault();
-  let nameInput = document.querySelector("input[name='name']").value;
-  let jobInput = document.querySelector("input[name='profession']").value;
-  finalName.textContent = nameInput;
-  finalJob.textContent = jobInput;
+
+  finalName.textContent = nameInput.value;
+  finalJob.textContent = jobInput.value;
 }
 
 formElement.addEventListener('submit', formSubmitHandler);
