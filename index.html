@@ -24,54 +24,18 @@
         </section>
         <section class="main__gallery">
           <ul class="gallery">
-            <li class="gallery__item">
-              <img class="gallery__image" src="./images/argentina.jpeg" alt="Природный пейзаж. Аргентина.">
-              <div class="gallery__item-content">
-                <h2 class="gallery__title">Аргентина</h2>
-                <button class="gallery__like" type="button"></button>
-              </div>
-            </li>
-            <li class="gallery__item">
-              <img class="gallery__image" src="./images/australia.jpeg" alt="Природный пейзаж. Австралия.">
-              <div class="gallery__item-content">
-                <h2 class="gallery__title">Австралия</h2>
-                <button class="gallery__like" type="button"></button></div>
-            </li>
-            <li class="gallery__item">
-              <img class="gallery__image" src="./images/bali.jpeg" alt="Природный пейзаж. Индонезия, Бали.">
-              <div class="gallery__item-content">
-                <h2 class="gallery__title">Индонезия, о. Бали</h2>
-                <button class="gallery__like" type="button"></button></div>
-            </li>
-            <li class="gallery__item">
-              <img class="gallery__image" src="./images/iceland.jpeg" alt="Природный пейзаж. Исландия.">
-              <div class="gallery__item-content">
-                <h2 class="gallery__title">Исландия</h2>
-                <button class="gallery__like" type="button"></button></div>
-            </li>
-            <li class="gallery__item">
-              <img class="gallery__image" src="./images/sibyria.jpeg" alt="Природный пейзаж. Россия, Сибирь.">
-              <div class="gallery__item-content">
-                <h2 class="gallery__title">Россия, Сибирь</h2>
-                <button class="gallery__like" type="button"></button></div>
-            </li>
-            <li class="gallery__item">
-              <img class="gallery__image" src="./images/new_zeland.jpeg" alt="Природный пейзаж. Новая Зеландия.">
-              <div class="gallery__item-content">
-                <h2 class="gallery__title">Новая Зеландия</h2>
-                <button class="gallery__like" type="button"></button></div>
-            </li>
           </ul>
         </section>
     </main>
     <footer class="footer page__footer">
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
-    <div class="popup popup_is-closed">
+
+    <div class="popup popup-profile-edit popup_is-closed">
         <div class="popup__container">
           <button class="popup__close" type="button"></button>  
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form" name="popup-form">
+          <form class="popup__form popup__form_edit-profile" name="edit-profile">
             <input class="popup__input popup__input_type_name" type="text" name="name" placeholder="Жак-Ив Кусто">
             <input class="popup__input popup__input_type_job" type="text" name="profession" placeholder="Исследователь океана">
             <button class="popup__save-button" type="submit">Сохранить</button>
@@ -79,6 +43,30 @@
           
         </div>
     </div>
+
+    <div class="popup popup-add-card popup_is-closed">
+      <div class="popup__container">
+        <button class="popup__close" type="button"></button>  
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form popup__form_add-card" name="add-card">
+          <input class="popup__input popup__input_type_card-title" type="text" name="card-title" placeholder="Название">
+          <input class="popup__input popup__input_type_image-link" type="link" name="image-link" placeholder="Ссылка на картинку">
+          <button class="popup__create-button" type="submit">Создать</button>
+        </form>
+        
+      </div>
+  </div>
+  
+  <template class="gallery-template">
+    <li class="gallery__item">
+      <button class="gallery__delete-item" type="button"></button>
+      <img class="gallery__image" src="./images/new_zeland.jpeg" alt="Природный пейзаж. Новая Зеландия.">
+      <div class="gallery__item-content">
+        <h2 class="gallery__title"></h2>
+        <button class="gallery__like" type="button"></button></div>
+    </li>
+  </template>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/index-5.js"></script>
   </body>
 </html>  
