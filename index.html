@@ -12,6 +12,7 @@
     <header class="header page__header">
         <img class="header__logo" src="./images/logo.svg" alt="Логотип">
     </header>
+
     <main class="main page__main">
         <section class="profile main__profile">
           <img class="profile__avatar" src="./images/Jacques-Yves_Cousteau.png" alt="Аватар профиля.">
@@ -22,11 +23,13 @@
           </div>
           <button class="profile__add-button" type="button"></button>
         </section>
+
         <section class="main__gallery">
           <ul class="gallery">
           </ul>
         </section>
     </main>
+
     <footer class="footer page__footer">
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
@@ -53,20 +56,29 @@
           <input class="popup__input popup__input_type_image-link" type="link" name="image-link" placeholder="Ссылка на картинку">
           <button class="popup__create-button" type="submit">Создать</button>
         </form>
-        
       </div>
-  </div>
+    </div>
+
+    <div class="popup popup-card-image popup_is-closed">
+      <div class="popup__transparent-container">
+        <button class="popup__close" type="button"></button>
+        <div class="popup__image-container">
+          <img class="popup__image" src="#" alt="Природный пейзаж.">
+        </div>
+        <h2 class="popup__image-title">новый попап</h2></div>
+    </div>
   
   <template class="gallery-template">
     <li class="gallery__item">
       <button class="gallery__delete-item" type="button"></button>
-      <img class="gallery__image" src="./images/new_zeland.jpeg" alt="Природный пейзаж. Новая Зеландия.">
+      <img class="gallery__image" src="#" alt="Природный пейзаж.">
       <div class="gallery__item-content">
         <h2 class="gallery__title"></h2>
         <button class="gallery__like" type="button"></button></div>
     </li>
   </template>
+
     <script src="./scripts/index.js"></script>
-    <script src="./scripts/index-5.js"></script>
+
   </body>
 </html>  
