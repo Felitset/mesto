@@ -24,9 +24,9 @@ const finalJob = document.querySelector('.profile__description');
 const popupProfileCloseButtonElement = popupProfileElement.querySelector('.popup__close');
 const submitProfileButtonElement = popupProfileElement.querySelector('.popup__save-button');
 
-let formProfileElement = popupProfileElement.querySelector('.popup__form');
-let popupInputName = popupProfileElement.querySelector('.popup__input_type_name');
-let popupInputJob = popupProfileElement.querySelector('.popup__input_type_job');
+const formProfileElement = popupProfileElement.querySelector('.popup__form');
+const popupInputName = popupProfileElement.querySelector('.popup__input_type_name');
+const popupInputJob = popupProfileElement.querySelector('.popup__input_type_job');
 
 const closeProfilePopup = function() {
   popupProfileElement.classList.add('popup_is-closed');
@@ -95,17 +95,17 @@ popupAddCardButtonElement.addEventListener('click', openAddCardPopup);
 popupProfileCloseButtonElement.addEventListener('click', closeProfilePopup);
 
 
-function createCard(place_info) {
-const template = card_template.content.querySelector(selectors.card_item).cloneNode(true)
+function createCardTemplate(place_info) {
+const cardTemplate = card_template.content.querySelector(selectors.card_item).cloneNode(true)
 
-template.querySelector(selectors.card_image_link).src = place_info.link
-template.querySelector(selectors.card_name).textContent = place_info.name
+cardTemplate.querySelector(selectors.card_image_link).src = place_info.link
+cardTemplate.querySelector(selectors.card_name).textContent = place_info.name
  
+cardTemplate.querySelector(selectors.card_delete_button).addEventListener('click', () => {cardTemplate.remove();});
+cardTemplate.querySelector(selectors.card_like_button).addEventListener('click', () => {setLike(cardTemplate);});
+cardTemplate.querySelector(selectors.card_image_link).addEventListener('click', () => {openPopupCardImagePreview(place_info);});
 
-template.querySelector(selectors.card_delete_button).addEventListener('click', () => {template.remove();});
-template.querySelector(selectors.card_like_button).addEventListener('click', () => {setLike(template);});
-template.querySelector(selectors.card_image_link).addEventListener('click', () => {openPopupCardImagePreview(place_info);});
-list_of_cards.prepend(template);
+return cardTemplate
 }
 
 function setLike(template) {
@@ -140,7 +140,10 @@ const places_info = [
   }
 ];
 
-places_info.forEach(createCard);
+
+places_info.forEach((element) => {
+  list_of_cards.prepend(createCardTemplate(element));
+});
 }
 
 
@@ -151,7 +154,8 @@ function addCardSubmitHandler(evt) {
     link: cardImgLink.value
   }
   
-  createCard(place_info)
+  const card_template = createCardTemplate(place_info)
+  list_of_cards.prepend(card_template);
 
   closeAddCardPopup();
 }
