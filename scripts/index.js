@@ -17,9 +17,11 @@ function closePopup(popupElement) {
 
 
 function openAddCardPopup() {
-  openPopup(popupAddCardElement)
-    
-  addCardForm.addEventListener('submit', addCardSubmitHandler)
+  openPopup(popupAddCardElement);
+  
+  addCardForm.addEventListener('submit', addCardSubmitHandler);
+  cardName.value = '';
+  cardImgLink.value = '';
   };
   
 popupAddCardButtonElement.addEventListener('click', openAddCardPopup);
