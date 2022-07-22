@@ -164,10 +164,13 @@ addDefaultCards();
 
 // Card preview popup
 
+const popupImage = popupCardImagePreview.querySelector('.popup__image');
+const popupImageTitle = popupCardImagePreview.querySelector('.popup__image-title');
+
 function openPopupCardImagePreview(card_info) {
   popupCardImagePreview.classList.remove('popup_is-closed');
-  popupCardImagePreview.querySelector('.popup__image').src = card_info.link;
-  popupCardImagePreview.querySelector('.popup__image-title').textContent = card_info.name;
+  popupImage.src = card_info.link;
+  popupImageTitle.textContent = card_info.name;
 }
 
 function closePopupCardImagePreview(event) {
