@@ -7,7 +7,6 @@ const popupAddCardButtonElement = document.querySelector('.profile__add-button')
 const popup = document.querySelector('.popup');
 
 
-
 function openPopup(popupElement) {
   popupElement.classList.remove('popup_is-closed');
 }
@@ -22,25 +21,24 @@ function openAddCardPopup() {
   addCardForm.addEventListener('submit', addCardSubmitHandler);
   cardName.value = '';
   cardImgLink.value = '';
-  };
+  }
   
 popupAddCardButtonElement.addEventListener('click', openAddCardPopup);
 
 function openProfilePopup() {
-  openPopup(popupProfileElement)
+  openPopup(popupProfileElement);
   
   popupInputName.value = finalName.textContent;
   popupInputJob.value = finalJob.textContent;
   formProfileElement.addEventListener('submit', editProfileSubmitHandler);
-};
+}
 
 popupProfileButtonElement.addEventListener('click', openProfilePopup);
 
 function openPopupCardImagePreview(card_info) {
-  openPopup(popupCardImagePreview)
-  
-  popupImage.src = card_info.link;
+  openPopup(popupCardImagePreview);
   popupImageTitle.textContent = card_info.name;
+  popupImage.src = card_info.link;
 }
 
 const finalName = document.querySelector('.profile__name');
@@ -56,7 +54,7 @@ const popupInputJob = popupProfileElement.querySelector('.popup__input_type_job'
 
 function closeProfilePopup() {
   closePopup(popupProfileElement);
-};
+}
 
 popupProfileCloseButtonElement.addEventListener('click', closeProfilePopup);
 
@@ -99,7 +97,7 @@ const submitAddCardButtonElement = popupAddCardElement.querySelector('.popup__sa
 
 function closeAddCardPopup() {
   closePopup(popupAddCardElement);
-};
+}
 
 
 popupAddCardCloseButtonElement.addEventListener('click', closeAddCardPopup);
@@ -115,17 +113,16 @@ popupProfileCloseButtonElement.addEventListener('click', closeProfilePopup);
 
 
 function createCardTemplate(place_info) {
-const cardTemplate = card_template.content.querySelector(selectors.card_item).cloneNode(true)
-
-cardTemplate.querySelector(selectors.card_image_link).src = place_info.link
-cardTemplate.querySelector(selectors.card_image_link).alt = place_info.name
-cardTemplate.querySelector(selectors.card_name).textContent = place_info.name
+const cardTemplate = card_template.content.querySelector(selectors.card_item).cloneNode(true);
+cardTemplate.querySelector(selectors.card_image_link).alt = place_info.name;
+cardTemplate.querySelector(selectors.card_name).textContent = place_info.name;
+cardTemplate.querySelector(selectors.card_image_link).src = place_info.link;
  
 cardTemplate.querySelector(selectors.card_delete_button).addEventListener('click', () => {cardTemplate.remove();});
 cardTemplate.querySelector(selectors.card_like_button).addEventListener('click', () => {setLike(cardTemplate);});
 cardTemplate.querySelector(selectors.card_image_link).addEventListener('click', () => {openPopupCardImagePreview(place_info);});
 
-return cardTemplate
+return cardTemplate;
 }
 
 function setLike(template) {
@@ -145,9 +142,9 @@ function addCardSubmitHandler(evt) {
   let place_info = {
     name: cardName.value,
     link: cardImgLink.value
-  }
+  };
   
-  const card_template = createCardTemplate(place_info)
+  const card_template = createCardTemplate(place_info);
   list_of_cards.prepend(card_template);
 
   closeAddCardPopup();
