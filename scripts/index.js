@@ -58,8 +58,8 @@ function closeProfilePopup() {
 
 popupProfileCloseButtonElement.addEventListener('click', closeProfilePopup);
 
-let nameInput = popupProfileElement.querySelector("input[name='name']");
-let jobInput = popupProfileElement.querySelector("input[name='profession']");
+const nameInput = popupProfileElement.querySelector("input[name='name']");
+const jobInput = popupProfileElement.querySelector("input[name='profession']");
 
 function editProfileSubmitHandler(evt) {
   evt.preventDefault();
@@ -137,9 +137,10 @@ function addDefaultCards() {
 }
 
 
+
 function addCardSubmitHandler(evt) {
   evt.preventDefault();
-  let place_info = {
+  const place_info = {
     name: cardName.value,
     link: cardImgLink.value
   };
