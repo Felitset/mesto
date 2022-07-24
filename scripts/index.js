@@ -18,11 +18,12 @@ function closePopup(popupElement) {
 function openAddCardPopup() {
   openPopup(popupAddCardElement);
   
-  addCardForm.addEventListener('submit', addCardSubmitHandler);
+  
   cardName.value = '';
   cardImgLink.value = '';
   }
-  
+  addCardForm.addEventListener('submit', addCardSubmitHandler);
+
 popupAddCardButtonElement.addEventListener('click', openAddCardPopup);
 
 function openProfilePopup() {
@@ -111,19 +112,20 @@ const cardImgLink = popupAddCardElement.querySelector("input[name='image-link']"
 
 popupProfileCloseButtonElement.addEventListener('click', closeProfilePopup);
 
+const cardTemplateImageLink = popupAddCardElement.querySelector(selectors.card_image_link);
 
 function createCardTemplate(place_info) {
 const cardTemplate = card_template.content.querySelector(selectors.card_item).cloneNode(true);
-cardTemplate.querySelector(selectors.card_image_link).alt = place_info.name;
+cardTemplateImageLink.alt = place_info.name;
 cardTemplate.querySelector(selectors.card_name).textContent = place_info.name;
-cardTemplate.querySelector(selectors.card_image_link).src = place_info.link;
+cardTemplateImageLink.src = place_info.link;
  
-cardTemplate.querySelector(selectors.card_delete_button).addEventListener('click', () => {cardTemplate.remove();});
-cardTemplate.querySelector(selectors.card_like_button).addEventListener('click', () => {setLike(cardTemplate);});
-cardTemplate.querySelector(selectors.card_image_link).addEventListener('click', () => {openPopupCardImagePreview(place_info);});
-
 return cardTemplate;
 }
+
+cardTemplate.querySelector(selectors.card_delete_button).addEventListener('click', () => {cardTemplate.remove();});
+cardTemplate.querySelector(selectors.card_like_button).addEventListener('click', () => {setLike(cardTemplate);});
+cardTemplateImageLink.addEventListener('click', () => {openPopupCardImagePreview(place_info);});
 
 function setLike(template) {
 template.querySelector('.gallery__like').classList.toggle('gallery__like_status_active');
