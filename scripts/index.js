@@ -12,6 +12,7 @@ const selectors = {
 }
 
 const popup = document.querySelector('.popup');
+const popupContainer = popup.querySelector('.popup__container');
 const popupProfileElement = document.querySelector('.popup-profile-edit');
 const formProfileElement = popupProfileElement.querySelector('.popup__form');
 
@@ -48,7 +49,19 @@ const finalJob = document.querySelector('.profile__description');
 
 function openPopup(popupElement) {
   popupElement.classList.remove('popup_is-closed');
+  popupElement.onclick = function (evt) {
+    if (evt.target.querySelector('.popup__transparent-container') || evt.target.querySelector('.popup__container')) {
+      closePopup(popupElement);
+   };
+   };
+   document.onkeydown = function(evt) {
+    if ( evt.key === "Escape" ) {
+        closePopup(popupElement);
+    }
+  };
 }
+
+
 function closePopup(popupElement) {
   popupElement.classList.add('popup_is-closed');
 }
