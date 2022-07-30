@@ -72,6 +72,7 @@ function openAddCardPopup() {
   
   cardName.value = '';
   cardImgLink.value = '';
+  clearPopup();
   }
 
 function openProfilePopup() {
@@ -79,13 +80,14 @@ function openProfilePopup() {
   
   popupInputName.value = finalName.textContent;
   popupInputJob.value = finalJob.textContent;
-  
+  clearPopup();
 }
 
 function openPopupCardImagePreview(card_info) {
   openPopup(popupCardImagePreview);
   popupImageTitle.textContent = card_info.name;
   popupImage.src = card_info.link;
+  
 }
 
 //Popup close function
@@ -154,7 +156,10 @@ function addCardSubmitHandler(evt) {
   list_of_cards.prepend(createCardTemplate(place_info));
 
   closeAddCardPopup();
+  errorElement.textContent = '';
+
 }
+
 function setLike(template) {
   template.querySelector('.gallery__like').classList.toggle('gallery__like_status_active');
   }

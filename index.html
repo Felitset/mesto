@@ -38,10 +38,12 @@
         <div class="popup__container">
           <button class="popup__close" type="button"></button>  
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form popup__form_edit-profile" name="edit-profile">
-            <input class="popup__input popup__input_type_name" type="text" name="name" placeholder="Жак-Ив Кусто">
-            <input class="popup__input popup__input_type_job" type="text" name="profession" placeholder="Исследователь океана">
-            <button class="popup__save-button" type="submit">Сохранить</button>
+          <form id="profile" class="popup__form popup__form_edit-profile" name="edit-profile" novalidate>
+            <input id="profile-name-input" class="popup__input popup__input_type_name" type="text" name="name" placeholder="Жак-Ив Кусто" required minlength="2" maxlength="40">
+            <span class="profile-name-input-error"></span>
+            <input id="job-input" class="popup__input popup__input_type_job" type="text" name="profession" placeholder="Исследователь океана" required minlength="2" maxlength="200">
+            <span class="job-input-error"></span>
+            <button class="popup__save-button popup__button" type="submit">Сохранить</button>
           </form>
           
         </div>
@@ -51,10 +53,12 @@
       <div class="popup__container">
         <button class="popup__close" type="button"></button>  
         <h2 class="popup__title">Новое место</h2>
-        <form class="popup__form popup__form_add-card" name="add-card">
-          <input class="popup__input popup__input_type_card-title" type="text" name="card-title" placeholder="Название">
-          <input class="popup__input popup__input_type_image-link" type="link" name="image-link" placeholder="Ссылка на картинку">
-          <button class="popup__create-button" type="submit">Создать</button>
+        <form id="gallery" class="popup__form popup__form_add-card" name="add-card" novalidate>
+          <input id="card-title-input" class="popup__input popup__input_type_card-title" type="text" name="card-title" placeholder="Название" required minlength="2" maxlength="30">
+          <span class="card-title-input-error"></span>
+          <input id="image-link-input" class="popup__input popup__input_type_image-link" type="url" name="image-link" placeholder="Ссылка на картинку" required>
+          <span class="image-link-input-error"></span>
+          <button class="popup__create-button popup__button" type="submit">Создать</button>
         </form>
       </div>
     </div>
@@ -81,6 +85,7 @@
     <script src="./scripts/validate.js"></script>
     <script src="./scripts/card-array.js"></script>
     <script src="./scripts/index.js"></script>
+    
     
   </body>
 </html>  
