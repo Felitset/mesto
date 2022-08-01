@@ -64,6 +64,8 @@ const popupInputJob = popupProfileElement.querySelector(
 const finalName = document.querySelector(".profile__name");
 const finalJob = document.querySelector(".profile__description");
 
+
+//Unifuncion OPEN-CLOSE (via Esc and Overlay)
 function openPopup(popupElement) {
   popupElement.classList.remove("popup_is-closed");
   popupElement.addEventListener("click", evt => handleOverlayClose(evt, popupElement));
@@ -74,8 +76,6 @@ function openPopup(popupElement) {
   }
   document.addEventListener("keydown", evt => handleEscClose(evt, popupElement));
 }
-
-
 
 function closePopup(popupElement) {
   popupElement.classList.add("popup_is-closed");
