@@ -1,37 +1,26 @@
-const validationSelectors = {
-    formElement: ".popup__form",
-    cardTitleInput: ".popup__input_type_card-title",
-    listOfCards: ".gallery",
-    cardItem: ".gallery__item",
-    cardName: ".gallery__title",
-    cardImageLink: ".gallery__image",
-    cardTemplate: ".gallery-template",
-    cardDeleteButton: ".gallery__delete-item",
-    cardLikeButton: ".gallery__like",
-  };
 
 const validationConfig = {
-    formElement: validationSelectors.formElement,
+    formElement: ".popup__form",
     formInput: ".popup__input",
     formButton: ".popup__button",
     activeButtonClass: "popup__button_active",
     inputErrorClass: "popup__input_type_error",
-    errorElement: "popup__input-error_message",
+    errorElement: "popup__input-error_message"
   }
 
 //Show error if not valid
 const showInputError = (formElement, inputElement, errorMessage) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.add("popup__input_type_error");
+    inputElement.classList.add(validationConfig.inputErrorClass);
     errorElement.textContent = errorMessage;
-    errorElement.classList.add("popup__input-error_message");
+    errorElement.classList.add(validationConfig.errorElement);
   };
  
 //Hide error if valid
 const hideInputError = (formElement, inputElement) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove("popup__input_type_error");
-    errorElement.classList.remove("popup__input-error_message");
+    inputElement.classList.remove(validationConfig.inputErrorClass);
+    errorElement.classList.remove(validationConfig.errorElement);
     errorElement.textContent = "";
   };
 
@@ -46,8 +35,8 @@ const checkInputValidity = (formElement, inputElement) => {
  
 // Event
 const setEventListeners = (formElement) => {
-    const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
-    const formButton = formElement.querySelector(".popup__button");
+    const inputList = Array.from(formElement.querySelectorAll(validationConfig.formInput));
+    const formButton = formElement.querySelector(validationConfig.formButton);
     toggleButtonState(inputList, formButton);
     inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", function () {
@@ -58,7 +47,7 @@ const setEventListeners = (formElement) => {
   };
   
 const enableValidation = () => {
-    const formList = Array.from(document.querySelectorAll(".popup__form"));
+    const formList = Array.from(document.querySelectorAll(validationConfig.formElement));
     formList.forEach((formElement) => {
       formElement.addEventListener("submit", function (evt) {
         evt.preventDefault();
@@ -76,12 +65,12 @@ const hasInvalidInput = (inputList) => {
 
 //Button behaviour
 const activatePopupButton = (formButton) => {
-    formButton.classList.add("popup__button_active");
+    formButton.classList.add(validationConfig.activeButtonClass);
     formButton.removeAttribute("disabled");
   };
   
 const deactivatePopupButton = (formButton) => {
-    formButton.classList.remove("popup__button_active");
+    formButton.classList.remove(validationConfig.activeButtonClass);
     formButton.setAttribute("disabled", true);
   };
   
@@ -100,10 +89,10 @@ const toggleButtonState = (inputList, formButton) => {
 
 //Input line clear
 function clearPopup() {
-    const inputList = Array.from(document.querySelectorAll(".popup__input"));
+    const inputList = Array.from(document.querySelectorAll(validationConfig.formInput));
     const spanList = [];
     inputList.forEach((inputElement) => {
-      inputElement.classList.remove("popup__input_type_error");
+      inputElement.classList.remove(validationConfig.inputErrorClass);
       spanList.push(document.querySelector(`.${inputElement.id}-error`));
     });
     spanList.forEach((spanElement) => {
