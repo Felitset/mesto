@@ -1,19 +1,20 @@
-export class FormValidator {
-    constructor(validationConfig) {
-      
+class FormValidator {
+    constructor(validationConfig, formType) {
+      this.validationConfig = validationConfig;
+      this.formType = formType;
     }
 
     _showInputError() {
-        const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.add(validationConfig.inputErrorClass);
-    errorElement.textContent = errorMessage;
-    errorElement.classList.add(validationConfig.errorElement);
+      const errorElement = this.validationConfig.formElement.querySelector(`.${inputElement.id}-error`);
+      inputElement.classList.add(this.validationConfig.inputErrorClass);
+      errorElement.textContent = errorMessage;
+      errorElement.classList.add(this.validationConfig.errorElement);
     }
 
     _hideInputError() {
         const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-        inputElement.classList.remove(validationConfig.inputErrorClass);
-        errorElement.classList.remove(validationConfig.errorElement);
+        inputElement.classList.remove(this.validationConfig.inputErrorClass);
+        errorElement.classList.remove(this.validationConfig.errorElement);
         errorElement.textContent = "";
     }
 

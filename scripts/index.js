@@ -1,6 +1,6 @@
 import {FormValidator} from './ FormValidator.js' // Main page
 import { clearPopup } from "./validate.js";
-import { Card } from "./Card.js";
+import { Card, creationCard } from "./Card.js";
 const selectors = {
   popupInputForm: ".popup__form",
   cardTitleInput: ".popup__input_type_card-title",
@@ -142,14 +142,15 @@ function addCardSubmitHandler(evt, formButton) {
     link: cardImgLink.value,
   };
 
- // Создадим экземпляр карточки
- const card = new Card(placeInfo.name, placeInfo.link, openPopupCardImagePreview);
- // Создаём карточку и возвращаем наружу
- const cardElement = card.generateCard();
+  creationCard(placeInfo);
+//  // Создадим экземпляр карточки
+//  const card = new Card(placeInfo.name, placeInfo.link, openPopupCardImagePreview);
+//  // Создаём карточку и возвращаем наружу
+//  const cardElement = card.generateCard();
 
- // Добавляем в DOM
- listOfCards.prepend(cardElement);
-  // listOfCards.prepend(createCardTemplate(placeInfo));
+//  // Добавляем в DOM
+//  listOfCards.prepend(cardElement);
+//   // listOfCards.prepend(createCardTemplate(placeInfo));
 
   
   // const formButton = popupAddCardElement.querySelector(validationConfig.formButton);

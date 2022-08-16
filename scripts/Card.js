@@ -61,13 +61,26 @@ export class Card {
     
 }
 
-placesInfo.forEach((item) => {
-    // Создадим экземпляр карточки
-    const card = new Card(item.name, item.link, openPopupCardImagePreview);
+export function creationCard(item) {
+  const card = new Card(item.name, item.link, openPopupCardImagePreview);
     // Создаём карточку и возвращаем наружу
     const cardElement = card.generateCard();
   
     // Добавляем в DOM
     document.querySelector('.gallery').prepend(cardElement);
-  });
+}
+
+placesInfo.forEach((item) => creationCard(item));
+
+// placesInfo.forEach((item) => {
+//     // Создадим экземпляр карточки
+//     const card = new Card(item.name, item.link, openPopupCardImagePreview);
+//     // Создаём карточку и возвращаем наружу
+//     const cardElement = card.generateCard();
+  
+//     // Добавляем в DOM
+//     document.querySelector('.gallery').prepend(cardElement);
+//   });
+
+
 
