@@ -1,5 +1,5 @@
 
-export const validationConfig = {
+const validationConfig = {
     formElement: ".popup__form",
     formInput: ".popup__input",
     formButton: ".popup__button",
@@ -69,7 +69,7 @@ const activatePopupButton = (formButton) => {
     formButton.removeAttribute("disabled");
   };
   
-export const deactivatePopupButton = (formButton) => {
+const deactivatePopupButton = (formButton) => {
     formButton.classList.remove(validationConfig.activeButtonClass);
     formButton.setAttribute("disabled", true);
   };
@@ -88,7 +88,7 @@ const toggleButtonState = (inputList, formButton) => {
   
 
 //Input line clear
-export function clearPopup() {
+function clearPopup() {
     const inputList = Array.from(document.querySelectorAll(validationConfig.formInput));
     const spanList = [];
     inputList.forEach((inputElement) => {
