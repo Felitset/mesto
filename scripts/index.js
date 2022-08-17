@@ -1,6 +1,11 @@
-import {FormValidator} from './ FormValidator.js' // Main page
-import { clearPopup } from "./validate.js";
-import { Card, creationCard } from "./Card.js";
+import {
+  FormValidator
+} from './ FormValidator.js';
+import {
+  Card,
+  creationCard
+} from "./Card.js";
+
 const selectors = {
   popupInputForm: ".popup__form",
   cardTitleInput: ".popup__input_type_card-title",
@@ -13,9 +18,15 @@ const selectors = {
   cardLikeButton: ".gallery__like",
   popupCloseButton: ".popup__close"
 };
-
+const validationConfig = {
+  formInput: ".popup__input",
+  formButton: ".popup__button",
+  activeButtonClass: "popup__button_active",
+  inputErrorClass: "popup__input_type_error",
+  errorElement: "popup__input-error_message"
+}
 const popupProfileElement = document.querySelector(".popup-profile-edit");
-const formProfileElement = popupProfileElement.querySelector(selectors.popupInputForm);
+const editProfileForm = popupProfileElement.querySelector(selectors.popupInputForm);
 
 const popupAddCardElement = document.querySelector(".popup-add-card");
 const popupCardImagePreview = document.querySelector(".popup-card-image");
@@ -67,7 +78,7 @@ const formButton = popupAddCardElement.querySelector('.popup__button');
 //Unifuncion OPEN-CLOSE (via Esc and Overlay)
 function openPopup(popupElement) {
   popupElement.classList.add("popup_is-opened");
-  
+
   document.addEventListener("keydown", handleEscClose);
 }
 
@@ -80,18 +91,18 @@ function closePopup() {
 }
 
 function handleEscClose(evt) {
-    if (evt.key === "Escape") {
+  if (evt.key === "Escape") {
       closePopup();
-    };
+  };
 }
 
 function handleOverlayClose(evt) {
   if (
-    evt.target.querySelector(".popup__transparent-container") ||
-    evt.target.querySelector(".popup__container")
+      evt.target.querySelector(".popup__transparent-container") ||
+      evt.target.querySelector(".popup__container")
   ) {
 
-    closePopup();
+      closePopup();
   };
 }
 
@@ -99,10 +110,10 @@ function handleOverlayClose(evt) {
 //Popup open function
 function openAddCardPopup() {
   openPopup(popupAddCardElement);
-
   const formElement = popupAddCardElement.querySelector(".popup__form");
   formElement.reset();
-  clearPopup();
+  addCardValidator.clearInputErrors();
+  addCardValidator._deactivatePopupButton();
 }
 
 function openProfilePopup() {
@@ -110,7 +121,8 @@ function openProfilePopup() {
 
   popupInputName.value = finalName.textContent;
   popupInputJob.value = finalJob.textContent;
-  clearPopup();
+  editProfileValidator.clearInputErrors();
+  editProfileValidator._deactivatePopupButton();
 }
 
 export function openPopupCardImagePreview(card_info) {
@@ -122,94 +134,31 @@ export function openPopupCardImagePreview(card_info) {
 
 //Popup submit function
 
-function editProfileSubmitHandler(evt, formButton) {
+function editProfileSubmitHandler(evt) {
   evt.preventDefault();
 
   finalName.textContent = nameInput.value;
   finalJob.textContent = jobInput.value;
-  
-  // const formButton = popupProfileElement.querySelector(validationConfig.formButton);
-  if (formButton) {
-    deactivatePopupButton(formButton);
-  };
+
   closePopup();
 }
 
-function addCardSubmitHandler(evt, formButton) {
+function addCardSubmitHandler(evt) {
   evt.preventDefault();
   const placeInfo = {
-    name: cardName.value,
-    link: cardImgLink.value,
+      name: cardName.value,
+      link: cardImgLink.value,
   };
 
   creationCard(placeInfo);
-//  // Создадим экземпляр карточки
-//  const card = new Card(placeInfo.name, placeInfo.link, openPopupCardImagePreview);
-//  // Создаём карточку и возвращаем наружу
-//  const cardElement = card.generateCard();
-
-//  // Добавляем в DOM
-//  listOfCards.prepend(cardElement);
-//   // listOfCards.prepend(createCardTemplate(placeInfo));
-
-  
-  // const formButton = popupAddCardElement.querySelector(validationConfig.formButton);
-  if (formButton) {
-    deactivatePopupButton(formButton);
-  };
   closePopup();
 }
-
-
-// function createCardTemplate(placeInfo) {
-//   const cardItem = cardTemplate.content.querySelector(selectors.cardItem);
-//   const cardTemplateClone = cardItem.cloneNode(true);
-
-//   const cardImageLink = cardTemplateClone.querySelector(
-//     selectors.cardImageLink
-//   );
-//   const cardDeleteButton = cardTemplateClone.querySelector(
-//     selectors.cardDeleteButton
-//   );
-//   const cardLikeButton = cardTemplateClone.querySelector(
-//     selectors.cardLikeButton
-//   );
-//   const cardName = cardTemplateClone.querySelector(selectors.cardName);
-
-//   cardImageLink.alt = placeInfo.name;
-//   cardName.textContent = placeInfo.name;
-//   cardImageLink.src = placeInfo.link;
-
-//   cardDeleteButton.addEventListener("click", () => {
-//     cardTemplateClone.remove();
-//   });
-//   cardLikeButton.addEventListener("click", () => {
-//     setLike(cardTemplateClone);
-//   });
-//   cardImageLink.addEventListener("click", () => {
-//     openPopupCardImagePreview(placeInfo);
-//   });
-
-//   return cardTemplateClone;
-// }
-
-// function addDefaultCards() {
-//   placesInfo.forEach((element) => {
-//     listOfCards.prepend(createCardTemplate(element));
-//   });
-// }
-
-// function setLike(template) {
-//   template
-//     .querySelector(".gallery__like")
-//     .classList.toggle("gallery__like_status_active");
-// }
-
+//Close via overlay
 document.addEventListener("click", handleOverlayClose);
 
 //Edit profile popup
 popupProfileButtonElement.addEventListener("click", openProfilePopup);
-formProfileElement.addEventListener("submit", editProfileSubmitHandler);
+editProfileForm.addEventListener("submit", editProfileSubmitHandler);
 popupProfileCloseButtonElement.addEventListener("click", closePopup);
 
 //Add card popup
@@ -223,6 +172,10 @@ popupCardImagePreviewCloseButtonElement.addEventListener(
   closePopup
 );
 
-// addDefaultCards();
 
-// enableValidation(validationConfig);
+// Validation for input lines
+const addCardValidator = new FormValidator(validationConfig, addCardForm);
+addCardValidator.enableValidation();
+
+const editProfileValidator = new FormValidator(validationConfig, editProfileForm);
+editProfileValidator.enableValidation();
