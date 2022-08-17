@@ -135,8 +135,8 @@ function addCardSubmitHandler(evt) {
       name: cardName.value,
       link: cardImgLink.value,
   };
-
-  createCard(placeInfo);
+  const card = createCard(placeInfo)
+  addCard(card);
   closePopup();
 }
 //Close via overlay
@@ -161,10 +161,15 @@ popupCardImagePreviewCloseButtonElement.addEventListener(
 function createCard(item) {
   const card = new Card(item.name, item.link, openPopupCardImagePreview);
   const cardElement = card.generateCard();
-  document.querySelector('.gallery').prepend(cardElement);
+  return cardElement;
 }
 
-placesInfo.forEach((item) => createCard(item));
+
+placesInfo.forEach((item) => addCard(createCard(item)));
+
+function addCard(cardElement) {
+  document.querySelector('.gallery').prepend(cardElement);
+}
 
 // Validation for input lines
 const addCardValidator = new FormValidator(validationConfig, addCardForm);
