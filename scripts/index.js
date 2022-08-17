@@ -1,30 +1,17 @@
 import {
   FormValidator
-} from './ FormValidator.js';
+} from './FormValidator.js';
 import {
-  Card,
-  creationCard
+  Card
 } from "./Card.js";
+import {
+  selectors, 
+  validationConfig
+} from "../utils/constants.js";
+import {
+  placesInfo
+} from "./card-array.js";
 
-const selectors = {
-  popupInputForm: ".popup__form",
-  cardTitleInput: ".popup__input_type_card-title",
-  listOfCards: ".gallery",
-  cardItem: ".gallery__item",
-  cardName: ".gallery__title",
-  cardImageLink: ".gallery__image",
-  cardTemplate: ".gallery-template",
-  cardDeleteButton: ".gallery__delete-item",
-  cardLikeButton: ".gallery__like",
-  popupCloseButton: ".popup__close"
-};
-const validationConfig = {
-  formInput: ".popup__input",
-  formButton: ".popup__button",
-  activeButtonClass: "popup__button_active",
-  inputErrorClass: "popup__input_type_error",
-  errorElement: "popup__input-error_message"
-}
 const popupProfileElement = document.querySelector(".popup-profile-edit");
 const editProfileForm = popupProfileElement.querySelector(selectors.popupInputForm);
 
@@ -74,6 +61,7 @@ const finalName = document.querySelector(".profile__name");
 const finalJob = document.querySelector(".profile__description");
 
 const formButton = popupAddCardElement.querySelector('.popup__button');
+const formAddCard = popupAddCardElement.querySelector(".popup__form");
 
 //Unifuncion OPEN-CLOSE (via Esc and Overlay)
 function openPopup(popupElement) {
@@ -81,7 +69,6 @@ function openPopup(popupElement) {
 
   document.addEventListener("keydown", handleEscClose);
 }
-
 
 function closePopup() {
   const activePopup = document.querySelector(".popup_is-opened");
@@ -110,10 +97,9 @@ function handleOverlayClose(evt) {
 //Popup open function
 function openAddCardPopup() {
   openPopup(popupAddCardElement);
-  const formElement = popupAddCardElement.querySelector(".popup__form");
-  formElement.reset();
+  formAddCard.reset();
   addCardValidator.clearInputErrors();
-  addCardValidator._deactivatePopupButton();
+  addCardValidator.deactivatePopupButton();
 }
 
 function openProfilePopup() {
@@ -122,7 +108,7 @@ function openProfilePopup() {
   popupInputName.value = finalName.textContent;
   popupInputJob.value = finalJob.textContent;
   editProfileValidator.clearInputErrors();
-  editProfileValidator._deactivatePopupButton();
+  editProfileValidator.deactivatePopupButton();
 }
 
 export function openPopupCardImagePreview(card_info) {
@@ -150,7 +136,7 @@ function addCardSubmitHandler(evt) {
       link: cardImgLink.value,
   };
 
-  creationCard(placeInfo);
+  createCard(placeInfo);
   closePopup();
 }
 //Close via overlay
@@ -172,6 +158,13 @@ popupCardImagePreviewCloseButtonElement.addEventListener(
   closePopup
 );
 
+function createCard(item) {
+  const card = new Card(item.name, item.link, openPopupCardImagePreview);
+  const cardElement = card.generateCard();
+  document.querySelector('.gallery').prepend(cardElement);
+}
+
+placesInfo.forEach((item) => createCard(item));
 
 // Validation for input lines
 const addCardValidator = new FormValidator(validationConfig, addCardForm);

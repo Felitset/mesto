@@ -1,12 +1,3 @@
-import {
-  placesInfo
-} from "./card-array.js";
-import {
-  openPopupCardImagePreview
-} from "./index.js";
-
-const deleteButtonElement = document.querySelectorAll('.gallery__delete-item');
-
 export class Card {
   constructor(title, image, handleCardClick) {
       this._title = title;
@@ -35,6 +26,7 @@ export class Card {
       this._element = this._getTemplate();
       this._element.querySelector('.gallery__title').textContent = this._title;
       this._element.querySelector('.gallery__image').src = this._image;
+      this._element.querySelector('.gallery__image').alt = this._title;
       this._setEventListeners()
       return this._element;
   }
@@ -64,11 +56,3 @@ export class Card {
 
 
 }
-
-export function creationCard(item) {
-  const card = new Card(item.name, item.link, openPopupCardImagePreview);
-  const cardElement = card.generateCard();
-  document.querySelector('.gallery').prepend(cardElement);
-}
-
-placesInfo.forEach((item) => creationCard(item));

@@ -51,7 +51,7 @@ export class FormValidator {
       this.formButton.removeAttribute("disabled");
   };
 
-  _deactivatePopupButton() {
+  deactivatePopupButton() {
       this.formButton.classList.remove(this.validationConfig.activeButtonClass);
       this.formButton.setAttribute("disabled", true);
   };
@@ -64,7 +64,7 @@ export class FormValidator {
 
   _toggleButtonState() {
       if (this._hasInvalidInput()) {
-          this._deactivatePopupButton();
+          this.deactivatePopupButton();
       } else {
           this._activatePopupButton();
       }
