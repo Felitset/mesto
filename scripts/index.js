@@ -70,16 +70,15 @@ function openPopup(popupElement) {
   document.addEventListener("keydown", handleEscClose);
 }
 
-function closePopup() {
-  const activePopup = document.querySelector(".popup_is-opened");
-  activePopup.classList.remove("popup_is-opened");
-
+function closePopup(popupElement) {
+  popupElement.classList.remove("popup_is-opened");
   document.removeEventListener("keydown", handleEscClose);
 }
 
 function handleEscClose(evt) {
   if (evt.key === "Escape") {
-      closePopup();
+    const activePopup = document.querySelector(".popup_is-opened");
+    closePopup(activePopup);
   };
 }
 
@@ -88,8 +87,8 @@ function handleOverlayClose(evt) {
       evt.target.querySelector(".popup__transparent-container") ||
       evt.target.querySelector(".popup__container")
   ) {
-
-      closePopup();
+    const activePopup = document.querySelector(".popup_is-opened"); 
+    closePopup(activePopup);
   };
 }
 
@@ -118,6 +117,19 @@ export function openPopupCardImagePreview(card_info) {
   popupImage.alt = card_info.name;
 }
 
+// Popup close functions
+function closeAddCardPopup() {
+  closePopup(popupAddCardElement);
+}
+
+function closeProfilePopup() {
+  closePopup(popupProfileElement);
+}
+
+function closePopupCardImagePreview() {
+  closePopup(popupCardImagePreview);
+}
+
 //Popup submit function
 
 function editProfileSubmitHandler(evt) {
@@ -126,7 +138,7 @@ function editProfileSubmitHandler(evt) {
   finalName.textContent = nameInput.value;
   finalJob.textContent = jobInput.value;
 
-  closePopup();
+  closePopup(popupProfileElement);
 }
 
 function addCardSubmitHandler(evt) {
@@ -135,9 +147,9 @@ function addCardSubmitHandler(evt) {
       name: cardName.value,
       link: cardImgLink.value,
   };
-  const card = createCard(placeInfo)
+  const card = createCard(placeInfo);
   addCard(card);
-  closePopup();
+  closePopup(popupAddCardElement);
 }
 //Close via overlay
 document.addEventListener("click", handleOverlayClose);
@@ -145,17 +157,17 @@ document.addEventListener("click", handleOverlayClose);
 //Edit profile popup
 popupProfileButtonElement.addEventListener("click", openProfilePopup);
 editProfileForm.addEventListener("submit", editProfileSubmitHandler);
-popupProfileCloseButtonElement.addEventListener("click", closePopup);
+popupProfileCloseButtonElement.addEventListener("click", closeProfilePopup);
 
 //Add card popup
 popupAddCardButtonElement.addEventListener("click", openAddCardPopup);
-popupAddCardCloseButtonElement.addEventListener("click", closePopup);
+popupAddCardCloseButtonElement.addEventListener("click", closeAddCardPopup);
 addCardForm.addEventListener("submit", addCardSubmitHandler);
 
 //Card preview popup
 popupCardImagePreviewCloseButtonElement.addEventListener(
   "click",
-  closePopup
+  closePopupCardImagePreview
 );
 
 function createCard(item) {

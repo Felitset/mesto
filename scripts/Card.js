@@ -1,5 +1,4 @@
 export class Card {
-//   picture = this._element.querySelector('.gallery__image');
   constructor(title, image, handleCardClick) {
       this._title = title;
       this._image = image;
