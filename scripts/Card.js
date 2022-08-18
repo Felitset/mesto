@@ -1,4 +1,5 @@
 export class Card {
+//   picture = this._element.querySelector('.gallery__image');
   constructor(title, image, handleCardClick) {
       this._title = title;
       this._image = image;
@@ -24,9 +25,10 @@ export class Card {
 
   generateCard() {
       this._element = this._getTemplate();
+      this.image = this._element.querySelector('.gallery__image');
       this._element.querySelector('.gallery__title').textContent = this._title;
-      this._element.querySelector('.gallery__image').src = this._image;
-      this._element.querySelector('.gallery__image').alt = this._title;
+      this.image.src = this._image;
+      this.image.alt = this._title;
       this._setEventListeners()
       return this._element;
   }
