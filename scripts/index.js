@@ -94,13 +94,14 @@ function handleOverlayClose(evt) {
   };
 }
 
-
 //Popup open function
 function openAddCardPopup() {
   openPopup(popupAddCardElement);
   formAddCard.reset();
   addCardValidator.clearInputErrors();
   addCardValidator.deactivatePopupButton();
+
+  popupAddCardElement.addEventListener("click", handleOverlayClose);
 }
 
 function openProfilePopup() {
@@ -110,6 +111,7 @@ function openProfilePopup() {
   popupInputJob.value = finalJob.textContent;
   editProfileValidator.clearInputErrors();
   editProfileValidator.deactivatePopupButton();
+  popupProfileElement.addEventListener("click", handleOverlayClose);
 }
 
 export function openPopupCardImagePreview(card_info) {
@@ -117,19 +119,24 @@ export function openPopupCardImagePreview(card_info) {
   popupImageTitle.textContent = card_info.name;
   popupImage.src = card_info.link;
   popupImage.alt = card_info.name;
+
+  popupCardImagePreview.addEventListener("click", handleOverlayClose);
 }
 
 // Popup close functions
 function closeAddCardPopup() {
   closePopup(popupAddCardElement);
+  popupAddCardElement.removeEventListener("click", handleOverlayClose);
 }
 
 function closeProfilePopup() {
   closePopup(popupProfileElement);
+  popupProfileElement.removeEventListener("click", handleOverlayClose);
 }
 
 function closePopupCardImagePreview() {
   closePopup(popupCardImagePreview);
+  popupCardImagePreview.removeEventListener("click", handleOverlayClose);
 }
 
 //Popup submit function
@@ -153,8 +160,6 @@ function addCardSubmitHandler(evt) {
   addCard(card);
   closePopup(popupAddCardElement);
 }
-//Close via overlay
-document.addEventListener("click", handleOverlayClose);
 
 //Edit profile popup
 popupProfileButtonElement.addEventListener("click", openProfilePopup);
@@ -177,7 +182,6 @@ function createCard(item) {
   const cardElement = card.generateCard();
   return cardElement;
 }
-
 
 placesInfo.forEach((item) => addCard(createCard(item)));
 
