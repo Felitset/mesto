@@ -63,6 +63,8 @@ const finalJob = document.querySelector(".profile__description");
 const formButton = popupAddCardElement.querySelector('.popup__button');
 const formAddCard = popupAddCardElement.querySelector(".popup__form");
 
+const gallerySpace = document.querySelector('.gallery');
+
 //Unifuncion OPEN-CLOSE (via Esc and Overlay)
 function openPopup(popupElement) {
   popupElement.classList.add("popup_is-opened");
@@ -180,7 +182,7 @@ function createCard(item) {
 placesInfo.forEach((item) => addCard(createCard(item)));
 
 function addCard(cardElement) {
-  document.querySelector('.gallery').prepend(cardElement);
+  gallerySpace.prepend(cardElement);
 }
 
 // Validation for input lines
