@@ -14,6 +14,7 @@ export class PopupWithForm extends Popup {
           );
         this.form = this.popupSelector.querySelector(".popup__form");
         this.submitButton = this.popupSelector.querySelector('.popup__button');
+        
     };
 
     _getInputValues() {
@@ -29,6 +30,7 @@ export class PopupWithForm extends Popup {
     removeEventListeners() {
         super.removeEventListeners()
         this.popupSelector.removeEventListener("submit", (evt)=>{this.submitActor(evt)})
+        this.submitButton.removeEventListener('click', () => {this.closePopup()});
     }
 
    closePopup() {

@@ -108,7 +108,7 @@ import { PopupWithForm } from '../scripts/PopupWithForm.js';
     
     addCardPopup.form.reset();
     addCardValidator.clearInputErrors();
-    addCardValidator.deactivatePopupButton();
+    addCardValidator.deactivateSubmitButton();
   }
   
   function openProfilePopup() {
@@ -119,7 +119,7 @@ import { PopupWithForm } from '../scripts/PopupWithForm.js';
     profilePopup.inputJob.value = finalJob.textContent;
     
     editProfileValidator.clearInputErrors();
-    editProfileValidator.deactivatePopupButton();
+    editProfileValidator.deactivateSubmitButton();
   }
 
   // Popup close functions
