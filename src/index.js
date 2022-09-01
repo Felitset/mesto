@@ -20,6 +20,9 @@ import {
 import { 
     PopupWithForm 
   } from '../scripts/PopupWithForm.js';
+import { 
+    UserInfoOperator 
+  } from '../scripts/UserInfo.js';
   
   const popupProfileElement = document.querySelector(".popup-profile-edit");
   const editProfileForm = popupProfileElement.querySelector(selectors.popupInputForm);
@@ -45,39 +48,35 @@ import {
   const finalName = document.querySelector(".profile__name");
   const finalJob = document.querySelector(".profile__description");
   
-  
   const gallerySpace = document.querySelector('.gallery');
   
   //Popup open function
   function openAddCardPopup() {
-    const addCardPopup = new PopupWithForm(popupAddCardElement, addCardSubmitHandler)
+    const addCardPopup = new PopupWithForm(popupAddCardElement,
+         addCardSubmitHandler,
+         addCardValidator)
     addCardPopup.openPopup()
     
     addCardPopup.form.reset();
-    addCardValidator.clearInputErrors();
-    addCardValidator.deactivateSubmitButton();
+
   }
   
   function openProfilePopup() {
-    const profilePopup = new PopupWithForm(popupProfileElement, editProfileSubmitHandler)
+    const profilePopup = new PopupWithForm(popupProfileElement,
+         editProfileSubmitHandler,
+         editProfileValidator)
     profilePopup.openPopup()
-  
-    profilePopup.inputName.value = finalName.textContent;
-    profilePopup.inputJob.value = finalJob.textContent;
-    
-    editProfileValidator.clearInputErrors();
-    editProfileValidator.deactivateSubmitButton();
+    const userInfo = userInfoOperator.getUserInfo()
+    profilePopup.inputName.value = userInfo.name
+    profilePopup.inputJob.value = userInfo.job
   }
   
   //Popup submit function
   
   function editProfileSubmitHandler(evt) {
     evt.preventDefault();
-  
-    finalName.textContent = nameInput.value;
-    finalJob.textContent = jobInput.value;
-  
-    // closePopup(popupProfileElement);
+    userInfoOperator.setUserInfo({name:nameInput.value,
+                                job:jobInput.value})
   }
   
   function addCardSubmitHandler(evt) {
@@ -109,9 +108,11 @@ import {
     const cardElement = card.generateCard();
     return cardElement;
     }
-
+  const userInfoOperator = new UserInfoOperator({name:finalName,
+                                job:finalJob})
   new Section({items: placesInfo, renderer: createCard},
                 gallerySpace).createAllElements()
+ 
 
   // Validation for input lines
   const addCardValidator = new FormValidator(validationConfig, addCardForm);
