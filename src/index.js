@@ -1,9 +1,10 @@
+import './pages/index.css';
 import {
   FormValidator
-} from '../components/FormValidator.js';
+} from './components/FormValidator.js';
 import {
   Card
-} from "../components/Card.js";
+} from "./components/Card.js";
 import {
   selectors,
   validationConfig,
@@ -21,22 +22,22 @@ import {
   finalName,
   finalJob,
   gallerySpace
-} from "../utils/constants.js";
+} from "./utils/constants.js";
 import {
   placesInfo
-} from "../utils/card-array.js";
+} from "./utils/card-array.js";
 import {
   Section
-} from "../components/Section.js";
+} from "./components/Section.js";
 import {
   PopupWithImage
-} from "../components/PopupWithImage.js";
+} from "./components/PopupWithImage.js";
 import {
   PopupWithForm
-} from '../components/PopupWithForm.js';
+} from './components/PopupWithForm.js';
 import {
   UserInfoOperator
-} from '../components/UserInfo.js';
+} from './components/UserInfo.js';
 
 //Popup open (create class element)
 function openAddCardPopup() {
