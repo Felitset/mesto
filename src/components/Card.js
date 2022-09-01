@@ -3,7 +3,6 @@ export class Card {
       this._title = title;
       this._image = image;
       this._handleCardClick = handleCardClick;
-
   }
 
   setlike() {
@@ -52,7 +51,5 @@ export class Card {
           }
           this._handleCardClick(card_info)
       });
-
   }
-
 }

@@ -12,7 +12,6 @@ export class Popup {
     closePopup () {
         this.popupSelector.classList.remove("popup_is-opened");
         this.removeEventListeners();
-        console.log('wtf')
     };
 
     _handleEscClose(evt) {

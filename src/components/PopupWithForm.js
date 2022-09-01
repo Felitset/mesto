@@ -19,10 +19,6 @@ export class PopupWithForm extends Popup {
         
     };
 
-    _getInputValues() {
-
-    }
-
     setEventListeners() {
         super.setEventListeners()
         this.popupSelector.addEventListener("submit", (evt) => {
@@ -39,7 +35,5 @@ export class PopupWithForm extends Popup {
 
    closePopup() {
     super.closePopup();
-    // this.formValidator.clearInputErrors();
-    // this.formValidator.deactivateSubmitButton();
    }
 }
