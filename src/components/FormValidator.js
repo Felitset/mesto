@@ -4,7 +4,6 @@ export class FormValidator {
       this.formType = formType;
       this.inputList = Array.from(this.formType.querySelectorAll(this.validationConfig.formInput));
       this.formButton = this.formType.querySelector(this.validationConfig.formButton);
-
   }
 
   _showInputError(inputElement, errorMessage) {
@@ -71,9 +70,8 @@ export class FormValidator {
   }
 
   clearInputErrors() {
-      const inputList = Array.from(this.formType.querySelectorAll(this.validationConfig.formInput));
       const spanList = [];
-      inputList.forEach((inputElement) => {
+      this.inputList.forEach((inputElement) => {
           inputElement.classList.remove(this.validationConfig.inputErrorClass);
           spanList.push(document.querySelector(`.${inputElement.id}-error`));
       });

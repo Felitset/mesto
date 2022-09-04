@@ -5,19 +5,12 @@ export class Card {
       this._handleCardClick = handleCardClick;
   }
 
-  setlike() {
-      this._element
-          .querySelector(".gallery__like")
-          .classList.toggle("gallery__like_status_active");
-  }
-
   _getTemplate() {
       const cardElement = document
           .querySelector('.gallery-template')
           .content
           .querySelector('.gallery__item')
           .cloneNode(true);
-
       return cardElement;
   }
 
@@ -27,7 +20,7 @@ export class Card {
       this._element.querySelector('.gallery__title').textContent = this._title;
       this.image.src = this._image;
       this.image.alt = this._title;
-      this._setEventListeners()
+      this._setEventListeners();
       return this._element;
   }
 

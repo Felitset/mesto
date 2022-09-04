@@ -33,13 +33,6 @@ export const popupAddCardButtonElement = document.querySelector(
 
 export const addCardForm = popupAddCardElement.querySelector(selectors.popupInputForm);
 
-export const cardName = popupAddCardElement.querySelector("input[name='card-title']");
-export const cardImgLink = popupAddCardElement.querySelector(
-  "input[name='image-link']"
-);
-export const nameInput = popupProfileElement.querySelector("input[name='name']");
-export const jobInput = popupProfileElement.querySelector("input[name='profession']");
-
 export const finalName = document.querySelector(".profile__name");
 export const finalJob = document.querySelector(".profile__description");
 

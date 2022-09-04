@@ -1,16 +1,16 @@
 export class UserInfoOperator {
-    constructor({name, job}) {
+    constructor({name, profession}) {
       this.name = name;
-      this.job = job;
+      this.profession = profession;
     };
 
     getUserInfo() {
       return {name:this.name.textContent,
-              job:this.job.textContent}
+        profession:this.profession.textContent}
     }
 
     setUserInfo(item) {
       this.name.textContent = item.name;
-      this.job.textContent = item.job;
+      this.profession.textContent = item.profession;
     }
 }
