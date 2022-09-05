@@ -43,6 +43,8 @@ const profilePopup = new PopupWithForm(popupProfileElement,
     editProfileSubmitHandler,
     editProfileValidator);
 
+const popupWithImage = new PopupWithImage( popupCardImagePreview);
+
 //open popups
 function openAddCardPopup() {
   addCardPopup.openPopup();
@@ -77,15 +79,13 @@ popupAddCardButtonElement.addEventListener("click", openAddCardPopup);
 
 //class element Card creation
 function createCard(item) {
-  const popupWithImage = new PopupWithImage({
-          image: item.image_link,
-          title: item.card_title
-      },
-      popupCardImagePreview)
   const card = new Card(item.card_title,
       item.image_link,
       () => {
-          popupWithImage.openPopup()
+          popupWithImage.openPopup({
+                  image: item.image_link,
+                  title: item.card_title
+              })
       }
   );
   const cardElement = card.generateCard();
