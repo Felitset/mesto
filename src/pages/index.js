@@ -1,4 +1,4 @@
-import './index.css';
+import '../pages/index.css';
 import {
   FormValidator
 } from '../components/FormValidator.js';
