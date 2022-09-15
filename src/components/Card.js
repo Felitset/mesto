@@ -30,7 +30,9 @@ export class Card {
       this._cardImageLink = this._element.querySelector('.gallery__image');
 
       this._deleteButtonElement.addEventListener("click", () => {
-          this._element.remove();
+        //   this._element.remove();
+       const popupConfirmDeletion = document.querySelector('.popup-delete-card');
+       popupConfirmDeletion.classList.add('popup_is-opened');
       });
 
       this._cardLikeButton.addEventListener("click", () => {

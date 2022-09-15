@@ -1,6 +1,7 @@
 .gallery__delete-item {
   background-image: url(../../../images/Trash-pictogram.png);
   background-color: transparent;
+  background-repeat: no-repeat;
   border-style: none;
   z-index: 100;
   position: absolute;
