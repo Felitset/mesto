@@ -6,7 +6,7 @@ export class Card {
       this._handleCardClick = handleCardClick;
       this._cardId = cardId;
       this._ownerId = ownerId;
-      this._currentLikesNumber = likesNumber;
+      this._defaultLikesNumber = likesNumber;
   }
 
   _getTemplate() {
@@ -18,9 +18,9 @@ export class Card {
       return cardElement;
   }
 
-  _setLikes(element){
+  _setDefaultLikes(element){
     const likeCounter = element.querySelector('.gallery__like-counter') 
-    likeCounter.textContent = this._currentLikesNumber
+    likeCounter.textContent = this._defaultLikesNumber
   }
 
   generateCard() {
@@ -29,7 +29,7 @@ export class Card {
       this._element.querySelector('.gallery__title').textContent = this._title;
       this.image.src = this._image;
       this.image.alt = this._title;
-      this._setLikes(this._element);
+      this._setDefaultLikes(this._element);
       this._setEventListeners();
       return this._element;
   }
