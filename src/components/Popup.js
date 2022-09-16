@@ -5,6 +5,7 @@ export class Popup {
       this._handleEscClose = this._handleEscClose.bind(this);
       this._handleOverlayClose = this._handleOverlayClose.bind(this);
       this.closePopup = this.closePopup.bind(this);
+      this.yesButton = this.popupSelector.querySelector(".popup__button-yes");
     };
 
     openPopup () {
@@ -33,6 +34,10 @@ export class Popup {
         this.closePopup();
         };
       }
+
+deleteCardfunction() {
+        document.querySelector(".gallery__item").remove();
+}
 
     setEventListeners() {
         this.closeButtonElement.addEventListener('click', this.closePopup);

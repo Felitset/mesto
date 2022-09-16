@@ -64,6 +64,7 @@
 @import url(../blocks/popup/__create-button/popup__create-button.css);
 @import url(../blocks/popup/__button/popup__button.css);
 @import url(../blocks/popup/__button/_active/popup__button_active.css);
+@import url(../blocks/popup/__button-yes/popup__button-yes.css);
 
 @import url(../blocks/popup/__image-container/popup__image-container.css);
 @import url(../blocks/popup/__image/popup__image.css);

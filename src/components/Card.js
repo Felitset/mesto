@@ -1,8 +1,12 @@
+import {openConfirmationPopup} from '../pages/index.js';
 export class Card {
-  constructor(title, image, handleCardClick) {
+  constructor(title, image, likesNumber, handleCardClick, cardId, ownerId) {
       this._title = title;
       this._image = image;
       this._handleCardClick = handleCardClick;
+      this._cardId = cardId;
+      this._ownerId = ownerId;
+      this._currentLikesNumber = likesNumber;
   }
 
   _getTemplate() {
@@ -14,12 +18,18 @@ export class Card {
       return cardElement;
   }
 
+  _setLikes(element){
+    const likeCounter = element.querySelector('.gallery__like-counter') 
+    likeCounter.textContent = this._currentLikesNumber
+  }
+
   generateCard() {
       this._element = this._getTemplate();
       this.image = this._element.querySelector('.gallery__image');
       this._element.querySelector('.gallery__title').textContent = this._title;
       this.image.src = this._image;
       this.image.alt = this._title;
+      this._setLikes(this._element);
       this._setEventListeners();
       return this._element;
   }
@@ -30,9 +40,7 @@ export class Card {
       this._cardImageLink = this._element.querySelector('.gallery__image');
 
       this._deleteButtonElement.addEventListener("click", () => {
-        //   this._element.remove();
-       const popupConfirmDeletion = document.querySelector('.popup-delete-card');
-       popupConfirmDeletion.classList.add('popup_is-opened');
+        openConfirmationPopup();
       });
 
       this._cardLikeButton.addEventListener("click", () => {

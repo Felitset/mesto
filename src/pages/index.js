@@ -26,7 +26,8 @@ import {
   newAvatarForm,
   editAvatarButton,
   profileAvatar,
-  avatarImageInput
+  avatarImageInput,
+  popupDeleteCard
 } from "../utils/constants.js";
 import {
   placesInfo
@@ -62,7 +63,7 @@ const avatarPopup = new PopupWithForm(popupAvatarEdit,
 
 const popupWithImage = new PopupWithImage(popupCardImagePreview);
 
-const popupConfirmDeletion = new Popup( )
+const popupConfirmDeletion = new Popup(popupDeleteCard)
 
 //open popups
 function openAddCardPopup() {
@@ -85,6 +86,10 @@ function openEditAvatarPopup() {
   avatarPopup.form.reset();
   editAvatarValidator.clearInputErrors();
   editAvatarValidator.deactivateSubmitButton();
+}
+
+export function openConfirmationPopup() {
+  popupConfirmDeletion.openPopup();
 }
 
 //submit popups
@@ -133,8 +138,9 @@ editAvatarButton.addEventListener("click", openEditAvatarPopup);
 
 //class element Card creation
 function createCard(item) {
+  
   const card = new Card(item.card_title,
-    item.image_link,
+    item.image_link, item.likes_number,
     () => {
       popupWithImage.openPopup({
         image: item.image_link,
@@ -167,7 +173,8 @@ function drawCardsFromAPI() {
       data.forEach((singleItem) => {
         placesInfo.push({
           card_title: singleItem.name,
-          image_link: singleItem.link
+          image_link: singleItem.link,
+          likes_number: singleItem.likes.length
         });
       })
       cardSetter = new Section({
@@ -175,12 +182,13 @@ function drawCardsFromAPI() {
         renderer: createCard
       },
         gallerySpace)
-        return cardSetter}
+      return cardSetter
+    }
     )
-    .then((cardSetter)=>{
+    .then((cardSetter) => {
       cardSetter.createAllElements();
     })
-  };
+};
 
 // const cardSetter = new Section({
 //   items: placesInfo,

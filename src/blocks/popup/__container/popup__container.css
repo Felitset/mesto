@@ -8,6 +8,7 @@
   font-family: 'Inter', Arial, sans-serif;
   position: relative;
   width: 100%;
+  min-height: 181px;
 }
 
 @media screen and (max-width: 600px) {
