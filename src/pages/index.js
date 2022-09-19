@@ -3,9 +3,7 @@ import {
   FormValidator
 } from '../components/FormValidator.js';
 import {
-  authToken,
-  cardUrl,
-  userUrl
+  userId
 } from "../utils/api_config";
 import {
   Card
@@ -25,19 +23,11 @@ import {
   popupAvatarEdit,
   newAvatarForm,
   editAvatarButton,
-  profileAvatar,
-  avatarImageInput,
-  popupDeleteCard
+  profileAvatar
 } from "../utils/constants.js";
-import {
-  placesInfo
-} from "../utils/card-array.js";
 import {
   Section
 } from "../components/Section.js";
-import {
-  Popup
-} from "../components/Popup.js";
 import {
   PopupWithImage
 } from "../components/PopupWithImage.js";
@@ -47,7 +37,9 @@ import {
 import {
   UserInfoOperator
 } from '../components/UserInfoOperator.js';
+import { ApiWorker } from '../components/ApiWorker';
 
+const apiCaller = new ApiWorker();
 //create popups
 const addCardPopup = new PopupWithForm(popupAddCardElement,
   addCardSubmitHandler,
@@ -63,7 +55,7 @@ const avatarPopup = new PopupWithForm(popupAvatarEdit,
 
 const popupWithImage = new PopupWithImage(popupCardImagePreview);
 
-const popupConfirmDeletion = new Popup(popupDeleteCard)
+// const popupConfirmDeletion = new PopupWithConfirmation()
 
 //open popups
 function openAddCardPopup() {
@@ -96,33 +88,25 @@ export function openConfirmationPopup() {
 function editProfileSubmitHandler(evt, userInfo) {
   evt.preventDefault();
   userInfoOperator.setUserInfo(userInfo);
-  fetch(userUrl, {
-    method: 'PATCH',
-    headers: {
-      'authorization': authToken,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: userInfo.name,
-      about: userInfo.profession
-    })
-  })
+  apiCaller.saveUser(userInfo)
+
 }
 
 function addCardSubmitHandler(evt, placeInfo) {
   evt.preventDefault();
-  cardSetter.addItem(cardSetter.renderer(placeInfo));
-  fetch(cardUrl, {
-    method: 'POST',
-    headers: {
-      'authorization': authToken,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: placeInfo.card_title,
-      link: placeInfo.image_link
-    })
+
+  let savedCard = apiCaller.saveCard(placeInfo)
+  savedCard.then((res) => {
+    return res.json();
+  }).then((data) => {
+    let placeInfoExt = Object.assign({}, placeInfo, {
+      likes_number: 0,
+      card_id: data._id,
+      users_like_flag: 0
+    });
+    cardSetter.addItem(cardSetter.renderer(placeInfoExt));
   })
+
 }
 
 function editAvatarImageHandler(evt, imageLink) {
@@ -138,9 +122,14 @@ editAvatarButton.addEventListener("click", openEditAvatarPopup);
 
 //class element Card creation
 function createCard(item) {
-  
-  const card = new Card(item.card_title,
-    item.image_link, item.likes_number,
+  const card = new Card(
+    item.card_title,
+    item.image_link,
+    item.likes_number,
+    item.card_id,
+    item.user_like_flag,
+    item.owner_id,
+    apiCaller,
     () => {
       popupWithImage.openPopup({
         image: item.image_link,
@@ -159,24 +148,33 @@ const userInfoOperator = new UserInfoOperator({
 })
 
 var cardSetter;
+
 function drawCardsFromAPI() {
-  fetch(cardUrl, {
-    method: 'GET',
-    headers: {
-      'authorization': authToken
-    }
-  }).then((res) => {
-    return res.json();
-  })
-    .then((data) => {
-      let placesInfo = [];
-      data.forEach((singleItem) => {
+  apiCaller.getAllCards()
+    .then((res) => {
+      return res.json();
+    })
+    .then((cards) => {
+      let placesInfo = []; // объявляем список элементов для создания карточек
+      cards.forEach((singleItem) => { //перебираем элементы из ответа
+        let user_like_flag = 0;     // определяем значение по уморчанию для 
+        singleItem.likes.forEach((like) => {  // перебираем все лайки для карточки
+          searchMyLike: if (like._id == userId) { // в поисках нашего лайка
+            user_like_flag = 1;   // если наш лайк найден меняем флаг
+            break searchMyLike;   // останавливаем цикл
+          };
+        });
+
         placesInfo.push({
           card_title: singleItem.name,
           image_link: singleItem.link,
-          likes_number: singleItem.likes.length
+          likes_number: singleItem.likes.length,
+          card_id: singleItem._id,
+          user_like_flag: user_like_flag,
+          owner_id: singleItem.owner._id
         });
       })
+      // debugger
       cardSetter = new Section({
         items: placesInfo,
         renderer: createCard
@@ -212,14 +210,10 @@ editAvatarValidator.enableValidation();
 let userDefaultInfo = {};
 
 function setDefaultNameProfession() {
-  fetch(userUrl, {
-    method: 'GET',
-    headers: {
-      'authorization': authToken
-    }
-  }).then((res) => {
-    return res.json();
-  })
+  apiCaller.getUser()
+    .then((res) => {
+      return res.json();
+    })
     .then((data) => {
       userDefaultInfo = {
         name: data.name,
