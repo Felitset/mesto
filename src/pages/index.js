@@ -102,7 +102,8 @@ function addCardSubmitHandler(evt, placeInfo) {
     let placeInfoExt = Object.assign({}, placeInfo, {
       likes_number: 0,
       card_id: data._id,
-      users_like_flag: 0
+      users_like_flag: 0,
+      owner_id: userId
     });
     cardSetter.addItem(cardSetter.renderer(placeInfoExt));
   })

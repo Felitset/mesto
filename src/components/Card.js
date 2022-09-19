@@ -2,7 +2,9 @@ import { openConfirmationPopup } from '../pages/index.js';
 import { userId } from '../utils/api_config.js';
 
 export class Card {
-    constructor(title, image, initialLikesNumber, cardId, userLikeFlag, ownerId, apiCaller, handleCardClick) {
+    constructor(title, image, 
+        initialLikesNumber, cardId, userLikeFlag,
+         ownerId, apiCaller, handleCardClick) {
         this._title = title;
         this._image = image;
         this._handleCardClick = handleCardClick;
