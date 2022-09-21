@@ -23,21 +23,15 @@ import {
   popupAvatarEdit,
   newAvatarForm,
   editAvatarButton,
-  profileAvatar
+  profileAvatar,
+  popupConfirmCardDeletion
 } from "../utils/constants.js";
-import {
-  Section
-} from "../components/Section.js";
-import {
-  PopupWithImage
-} from "../components/PopupWithImage.js";
-import {
-  PopupWithForm
-} from '../components/PopupWithForm.js';
-import {
-  UserInfoOperator
-} from '../components/UserInfoOperator.js';
+import { Section } from "../components/Section.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfoOperator } from '../components/UserInfoOperator.js';
 import { ApiWorker } from '../components/ApiWorker';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js'
 
 const apiCaller = new ApiWorker();
 //create popups
@@ -54,8 +48,9 @@ const avatarPopup = new PopupWithForm(popupAvatarEdit,
   editAvatarValidator);
 
 const popupWithImage = new PopupWithImage(popupCardImagePreview);
-
-// const popupConfirmDeletion = new PopupWithConfirmation()
+const popupConfirmDeletion = new PopupWithConfirmation(
+  popupConfirmCardDeletion,
+  () => { console.log('DELETE!!!!!!!!!!') });
 
 //open popups
 function openAddCardPopup() {
@@ -80,16 +75,11 @@ function openEditAvatarPopup() {
   editAvatarValidator.deactivateSubmitButton();
 }
 
-export function openConfirmationPopup() {
-  popupConfirmDeletion.openPopup();
-}
-
 //submit popups
 function editProfileSubmitHandler(evt, userInfo) {
   evt.preventDefault();
   userInfoOperator.setUserInfo(userInfo);
   apiCaller.saveUser(userInfo)
-
 }
 
 function addCardSubmitHandler(evt, placeInfo) {
@@ -124,18 +114,23 @@ editAvatarButton.addEventListener("click", openEditAvatarPopup);
 //class element Card creation
 function createCard(item) {
   const card = new Card(
-    item.card_title,
-    item.image_link,
-    item.likes_number,
-    item.card_id,
-    item.user_like_flag,
-    item.owner_id,
+    item,
     apiCaller,
     () => {
       popupWithImage.openPopup({
         image: item.image_link,
         title: item.card_title
       })
+    },
+    () => {
+      popupConfirmDeletion.setSubmitHandler(() => {
+        apiCaller.deleteCard(item.card_id)
+          .then(() => {
+            card.deleteCard();
+            popupConfirmDeletion.closePopup();
+          })
+      });
+      popupConfirmDeletion.openPopup();
     }
   );
   const cardElement = card.generateCard();
@@ -189,14 +184,9 @@ function drawCardsFromAPI() {
     })
 };
 
-// const cardSetter = new Section({
-//   items: placesInfo,
-//   renderer: createCard
-// },
-//   gallerySpace)
+
 drawCardsFromAPI();
-// debugger
-// cardSetter.createAllElements();
+
 
 // Validation for input lines
 const addCardValidator = new FormValidator(validationConfig, addCardForm);

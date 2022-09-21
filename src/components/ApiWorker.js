@@ -73,6 +73,20 @@ export class ApiWorker {
             });
     }
 
+    deleteCard(cardId) {
+        return fetch(cardUrl + '/' + cardId,
+            {
+                method: 'DELETE',
+                headers: {
+                    'authorization': authToken,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .catch((err) => {
+                console.log(err); // выведем ошибку в консоль
+            });
+    }
+
     getAllCards() {
         return fetch(cardUrl, {
             method: 'GET',

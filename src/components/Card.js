@@ -2,17 +2,17 @@ import { openConfirmationPopup } from '../pages/index.js';
 import { userId } from '../utils/api_config.js';
 
 export class Card {
-    constructor(title, image, 
-        initialLikesNumber, cardId, userLikeFlag,
-         ownerId, apiCaller, handleCardClick) {
-        this._title = title;
-        this._image = image;
-        this._handleCardClick = handleCardClick;
-        this._cardId = cardId;
-        this._ownerId = ownerId;
-        this._likesNumber = initialLikesNumber;
-        this._userLikeFlag = userLikeFlag;
+    constructor(item, apiCaller, handleCardClick, handleDeleteClick) {
+        this._title = item.card_title;
+        this._image = item.image_link;
+        this.cardId = item.card_id;
+        this._ownerId = item.owner_id;
+        this._likesNumber = item.likes_number;
+        this._userLikeFlag = item.user_like_flag;
         this._apiCaller = apiCaller;
+
+        this._handleCardClick = handleCardClick;
+        this._handleDeleteClick = handleDeleteClick;
     }
 
     _getTemplate() {
@@ -51,11 +51,11 @@ export class Card {
     _changeLikeStatus() {
         this._changeHeart();
         if (this._cardLikeButton.classList.contains("gallery__like_status_active")) {
-            this._apiCaller.saveRemoteLike(this._cardId);
+            this._apiCaller.saveRemoteLike(this.cardId);
             this._likesNumber = this._likesNumber + 1
         }
         else {
-            this._apiCaller.deleteRemoteLike(this._cardId);
+            this._apiCaller.deleteRemoteLike(this.cardId);
             this._likesNumber = this._likesNumber - 1
         }
         this._setLikesOnCard()
@@ -67,13 +67,17 @@ export class Card {
         }
     }
 
+    deleteCard() {
+        this._element.remove();
+    }
+
     _setEventListeners() {
         this._deleteButtonElement = this._element.querySelector('.gallery__delete-item');
         this._cardLikeButton = this._element.querySelector('.gallery__like');
         this._cardImageLink = this._element.querySelector('.gallery__image');
 
         this._deleteButtonElement.addEventListener("click", () => {
-            openConfirmationPopup();
+            this._handleDeleteClick()
         });
 
         this._cardLikeButton.addEventListener("click", () => {
