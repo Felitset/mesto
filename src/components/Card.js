@@ -1,4 +1,3 @@
-import { openConfirmationPopup } from '../pages/index.js';
 import { userId } from '../utils/api_config.js';
 
 export class Card {

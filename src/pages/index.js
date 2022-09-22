@@ -49,8 +49,7 @@ const avatarPopup = new PopupWithForm(popupAvatarEdit,
 
 const popupWithImage = new PopupWithImage(popupCardImagePreview);
 const popupConfirmDeletion = new PopupWithConfirmation(
-  popupConfirmCardDeletion,
-  () => { console.log('DELETE!!!!!!!!!!') });
+  popupConfirmCardDeletion);
 
 //open popups
 function openAddCardPopup() {
@@ -79,12 +78,17 @@ function openEditAvatarPopup() {
 function editProfileSubmitHandler(evt, userInfo) {
   evt.preventDefault();
   userInfoOperator.setUserInfo(userInfo);
+  profilePopup.changeSubmitButtonText('Сохранение...');
+
   apiCaller.saveUser(userInfo)
+    .then(() => {
+      profilePopup.changeSubmitButtonText('Сохранить')
+    })
 }
 
 function addCardSubmitHandler(evt, placeInfo) {
   evt.preventDefault();
-
+  addCardPopup.changeSubmitButtonText('Сохранение...')
   let savedCard = apiCaller.saveCard(placeInfo)
   savedCard.then((res) => {
     return res.json();
@@ -94,22 +98,30 @@ function addCardSubmitHandler(evt, placeInfo) {
       card_id: data._id,
       users_like_flag: 0,
       owner_id: userId
-    });
-    cardSetter.addItem(cardSetter.renderer(placeInfoExt));
-  })
+    })
+    cardSetter.addItem(cardSetter.renderer(placeInfoExt))
 
+  })
+    .then(() => {
+      addCardPopup.changeSubmitButtonText('Сохранить')
+    })
 }
 
 function editAvatarImageHandler(evt, imageLink) {
   evt.preventDefault();
   profileAvatar.src = imageLink.avatar_link;
+  avatarPopup.changeSubmitButtonText('Сохранение...')
+
+  apiCaller.postNewAvatar(imageLink)
+    .then(() => {
+      avatarPopup.changeSubmitButtonText('Сохранить')
+    })
 }
 
 //Listeners for open buttons
 popupProfileButtonElement.addEventListener("click", openProfilePopup);
 popupAddCardButtonElement.addEventListener("click", openAddCardPopup);
 editAvatarButton.addEventListener("click", openEditAvatarPopup);
-
 
 //class element Card creation
 function createCard(item) {
@@ -124,10 +136,14 @@ function createCard(item) {
     },
     () => {
       popupConfirmDeletion.setSubmitHandler(() => {
+        popupConfirmDeletion.changeSubmitButtonText('Удаление...');
         apiCaller.deleteCard(item.card_id)
           .then(() => {
             card.deleteCard();
             popupConfirmDeletion.closePopup();
+          })
+          .then(() => {
+            popupConfirmDeletion.changeSubmitButtonText('Да');
           })
       });
       popupConfirmDeletion.openPopup();
@@ -151,13 +167,13 @@ function drawCardsFromAPI() {
       return res.json();
     })
     .then((cards) => {
-      let placesInfo = []; // объявляем список элементов для создания карточек
-      cards.forEach((singleItem) => { //перебираем элементы из ответа
-        let user_like_flag = 0;     // определяем значение по уморчанию для 
-        singleItem.likes.forEach((like) => {  // перебираем все лайки для карточки
-          searchMyLike: if (like._id == userId) { // в поисках нашего лайка
-            user_like_flag = 1;   // если наш лайк найден меняем флаг
-            break searchMyLike;   // останавливаем цикл
+      let placesInfo = [];
+      cards.forEach((singleItem) => {
+        let user_like_flag = 0;
+        singleItem.likes.forEach((like) => {
+          searchMyLike: if (like._id == userId) {
+            user_like_flag = 1;
+            break searchMyLike;
           };
         });
 
@@ -170,7 +186,6 @@ function drawCardsFromAPI() {
           owner_id: singleItem.owner._id
         });
       })
-      // debugger
       cardSetter = new Section({
         items: placesInfo,
         renderer: createCard
@@ -184,9 +199,7 @@ function drawCardsFromAPI() {
     })
 };
 
-
 drawCardsFromAPI();
-
 
 // Validation for input lines
 const addCardValidator = new FormValidator(validationConfig, addCardForm);

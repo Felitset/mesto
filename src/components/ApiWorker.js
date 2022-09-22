@@ -14,7 +14,7 @@ export class ApiWorker {
                 'authorization': authToken
             }
         }).catch((err) => {
-            console.log(err); // выведем ошибку в консоль
+            console.log(err);
         });
     }
 
@@ -25,12 +25,12 @@ export class ApiWorker {
                 'authorization': authToken
             }
         }).catch((err) => {
-            console.log(err); // выведем ошибку в консоль
+            console.log(err);
         });
     }
 
     saveUser(userInfo) {
-        fetch(userUrl, {
+        return fetch(userUrl, {
             method: 'PATCH',
             headers: {
                 'authorization': authToken,
@@ -41,7 +41,7 @@ export class ApiWorker {
                 about: userInfo.profession
             })
         }).catch((err) => {
-            console.log(err); // выведем ошибку в консоль
+            console.log(err);
         });
     }
 
@@ -52,7 +52,7 @@ export class ApiWorker {
                 'authorization': authToken
             }
         }).catch((err) => {
-            console.log(err); // выведем ошибку в консоль
+            console.log(err);
         });
     }
 
@@ -69,7 +69,7 @@ export class ApiWorker {
             })
         })
             .catch((err) => {
-                console.log(err); // выведем ошибку в консоль
+                console.log(err);
             });
     }
 
@@ -83,7 +83,7 @@ export class ApiWorker {
                 }
             })
             .catch((err) => {
-                console.log(err); // выведем ошибку в консоль
+                console.log(err);
             });
     }
 
@@ -95,8 +95,22 @@ export class ApiWorker {
             }
         })
             .catch((err) => {
-                console.log(err); // выведем ошибку в консоль
+                console.log(err);
             });
     }
 
+    postNewAvatar(imageLink) {
+        return fetch(userUrl + '/avatar', {
+            method: 'PATCH',
+            headers: {
+                'authorization': authToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                avatar: imageLink.avatar_link
+            })
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
 }

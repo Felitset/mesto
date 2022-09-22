@@ -38,7 +38,6 @@ export class PopupWithForm extends Popup {
 
   submiting(evt) {
     const inputValues = this._getInputValues()
-
     this.submitHandler(evt, inputValues)
   }
 

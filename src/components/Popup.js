@@ -18,8 +18,6 @@ export class Popup {
         this.popupSelector.classList.remove("popup_is-opened");
         document.removeEventListener('keydown', this._handleEscClose);
         this.removeEventListeners();
-        // this.button.textContent = "Сохранение...";
-        // this.yesButton.textContent = "Отмена";
     };
 
     _handleEscClose(evt) {
@@ -35,6 +33,10 @@ export class Popup {
         ) {
             this.closePopup();
         };
+    }
+
+    changeSubmitButtonText(text) {
+        this.button.textContent = text
     }
 
     setEventListeners() {

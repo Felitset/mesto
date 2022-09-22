@@ -4,10 +4,9 @@ import {
 
 export class PopupWithConfirmation extends Popup {
 
-    constructor(popupSelector, submitHandler) {
+    constructor(popupSelector) {
         super(popupSelector);
-        this._submitButton = this.popupSelector.querySelector('.popup__button-yes');
-        this._submitHandler = submitHandler
+        this._submitButton = this.popupSelector.querySelector('.popup__button-yes')
     }
 
     setEventListeners() {
