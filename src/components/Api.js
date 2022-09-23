@@ -106,4 +106,8 @@ export class Api {
             })
         });
     }
+
+    checkForError() {
+
+    }
 }

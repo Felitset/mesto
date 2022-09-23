@@ -3,11 +3,10 @@ import {
 } from "./Popup.js";
 
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, submitHandler, formValidator) {
+  constructor(popupSelector, submitHandler){
     super(popupSelector);
     this.submitHandler = submitHandler;
     this.submiting = this.submiting.bind(this)
-    this.formValidator = formValidator;
     this.inputName = this.popupSelector.querySelector(
       ".popup__input_type_name"
     );

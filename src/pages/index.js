@@ -39,22 +39,20 @@ Promise.all([apiCaller.getUserId()])
 .then(()=>{
    userId=apiCaller.userId
 }
-).catch((err)=>{ 
+)
+.catch((err)=>{ 
   console.log(err);
 }) 
 
 //create popups
 const addCardPopup = new PopupWithForm(popupAddCardElement,
-  addCardSubmitHandler,
-  addCardValidator);
+  addCardSubmitHandler);
 
 const profilePopup = new PopupWithForm(popupProfileElement,
-  editProfileSubmitHandler,
-  editProfileValidator);
+  editProfileSubmitHandler);
 
 const avatarPopup = new PopupWithForm(popupAvatarEdit,
-  editAvatarImageHandler,
-  editAvatarValidator);
+  editAvatarImageHandler);
 
 const popupWithImage = new PopupWithImage(popupCardImagePreview);
 const popupConfirmDeletion = new PopupWithConfirmation(
@@ -90,7 +88,10 @@ function editProfileSubmitHandler(evt, userInfo) {
   profilePopup.changeSubmitButtonText('Сохранение...');
 
   apiCaller.saveUser(userInfo)
-    .then(() => {
+  .catch((err)=>{ 
+    console.log(err);
+  })
+    .finally(() => {
       profilePopup.changeSubmitButtonText('Сохранить')
     })
 }
@@ -111,7 +112,10 @@ function addCardSubmitHandler(evt, placeInfo) {
     cardSetter.addItem(cardSetter.renderer(placeInfoExt))
 
   })
-    .then(() => {
+  .catch((err)=>{ 
+    console.log(err);
+  })
+    .finally(() => {
       addCardPopup.changeSubmitButtonText('Сохранить')
     })
 }
@@ -122,7 +126,10 @@ function editAvatarImageHandler(evt, imageLink) {
   avatarPopup.changeSubmitButtonText('Сохранение...')
 
   apiCaller.postNewAvatar(imageLink)
-    .then(() => {
+    .catch((err)=>{ 
+      console.log(err);
+    })
+    .finally(() => {
       avatarPopup.changeSubmitButtonText('Сохранить')
     })
 }
@@ -151,7 +158,10 @@ function createCard(item) {
             card.deleteCard();
             popupConfirmDeletion.closePopup();
           })
-          .then(() => {
+          .catch((err)=>{ 
+            console.log(err);
+          })
+          .finally(() => {
             popupConfirmDeletion.changeSubmitButtonText('Да');
           })
       });
@@ -206,6 +216,9 @@ function drawCardsFromAPI() {
     .then((cardSetter) => {
       cardSetter.createAllElements();
     })
+    .catch((err)=>{ 
+      console.log(err);
+    })
 };
 
 drawCardsFromAPI();
@@ -233,6 +246,9 @@ function setDefaultNameProfession() {
         profession: data.about
       }
       userInfoOperator.setUserInfo(userDefaultInfo);
+    })
+    .catch((err)=>{ 
+      console.log(err);
     })
 }
 
