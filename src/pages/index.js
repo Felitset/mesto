@@ -3,7 +3,8 @@ import {
   FormValidator
 } from '../components/FormValidator.js';
 import {
-  userId
+  authToken,
+  apiHost
 } from "../utils/api_config";
 import {
   Card
@@ -30,10 +31,18 @@ import { Section } from "../components/Section.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfoOperator } from '../components/UserInfoOperator.js';
-import { ApiWorker } from '../components/ApiWorker';
+import { Api } from '../components/Api.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js'
+const apiCaller = new Api(apiHost, authToken);
+let userId = ''
+Promise.all([apiCaller.getUserId()])
+.then(()=>{
+   userId=apiCaller.userId
+}
+).catch((err)=>{ 
+  console.log(err);
+}) 
 
-const apiCaller = new ApiWorker();
 //create popups
 const addCardPopup = new PopupWithForm(popupAddCardElement,
   addCardSubmitHandler,
@@ -89,11 +98,11 @@ function editProfileSubmitHandler(evt, userInfo) {
 function addCardSubmitHandler(evt, placeInfo) {
   evt.preventDefault();
   addCardPopup.changeSubmitButtonText('Сохранение...')
-  let savedCard = apiCaller.saveCard(placeInfo)
+  const savedCard = apiCaller.saveCard(placeInfo)
   savedCard.then((res) => {
     return res.json();
   }).then((data) => {
-    let placeInfoExt = Object.assign({}, placeInfo, {
+    const placeInfoExt = Object.assign({}, placeInfo, {
       likes_number: 0,
       card_id: data._id,
       users_like_flag: 0,

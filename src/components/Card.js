@@ -1,4 +1,4 @@
-import { userId } from '../utils/api_config.js';
+// import { userId } from '../utils/api_config.js';
 
 export class Card {
     constructor(item, apiCaller, handleCardClick, handleDeleteClick) {
@@ -61,7 +61,7 @@ export class Card {
     }
 
     _manageDeleteButton() {
-        if (this._ownerId !== userId) {
+        if (this._ownerId !== this._apiCaller.userId) {
             this._deleteButtonElement.style.display = "none";
         }
     }

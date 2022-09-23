@@ -1,116 +1,109 @@
-import {
-    authToken,
-    cardUrl,
-    userUrl
-} from "../utils/api_config";
+export class Api {
+    constructor(apiHost, authToken) {
+        this.apiHost = apiHost;
+        this.authToken = authToken;
 
-export class ApiWorker {
-    constructor() { }
+        this.cardUrl = this.apiHost + '/cards';
+        this.userUrl = this.apiHost + '/users/me';
+        this.avatarUrl = this.userUrl + '/avatar';
+
+    }
+
+    getUserId() {
+        return this.getUser()
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                this.userId = data._id
+            });
+    }
 
     saveRemoteLike(cardId) {
-        fetch(cardUrl + '/' + cardId + '/likes', {
+        fetch(this.cardUrl + '/' + cardId + '/likes', {
             method: 'PUT',
             headers: {
-                'authorization': authToken
+                'authorization': this.authToken
             }
-        }).catch((err) => {
-            console.log(err);
         });
     }
 
     deleteRemoteLike(cardId) {
-        fetch(cardUrl + '/' + cardId + '/likes', {
+        fetch(this.cardUrl + '/' + cardId + '/likes', {
             method: 'DELETE',
             headers: {
-                'authorization': authToken
+                'authorization': this.authToken
             }
-        }).catch((err) => {
-            console.log(err);
         });
     }
 
     saveUser(userInfo) {
-        return fetch(userUrl, {
+        return fetch(this.userUrl, {
             method: 'PATCH',
             headers: {
-                'authorization': authToken,
+                'authorization': this.authToken,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 name: userInfo.name,
                 about: userInfo.profession
             })
-        }).catch((err) => {
-            console.log(err);
         });
     }
 
     getUser() {
-        return fetch(userUrl, {
+        return fetch(this.userUrl, {
             method: 'GET',
             headers: {
-                'authorization': authToken
+                'authorization': this.authToken
             }
-        }).catch((err) => {
-            console.log(err);
         });
     }
 
     saveCard(placeInfo) {
-        return fetch(cardUrl, {
+        return fetch(this.cardUrl, {
             method: 'POST',
             headers: {
-                'authorization': authToken,
+                'authorization': this.authToken,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 name: placeInfo.card_title,
                 link: placeInfo.image_link
             })
-        })
-            .catch((err) => {
-                console.log(err);
-            });
+        });
     }
 
     deleteCard(cardId) {
-        return fetch(cardUrl + '/' + cardId,
+        return fetch(this.cardUrl + '/' + cardId,
             {
                 method: 'DELETE',
                 headers: {
-                    'authorization': authToken,
+                    'authorization': this.authToken,
                     'Content-Type': 'application/json'
                 }
-            })
-            .catch((err) => {
-                console.log(err);
             });
     }
 
     getAllCards() {
-        return fetch(cardUrl, {
+        return fetch(this.cardUrl, {
             method: 'GET',
             headers: {
-                'authorization': authToken
+                'authorization': this.authToken
             }
-        })
-            .catch((err) => {
-                console.log(err);
-            });
+        });
     }
 
     postNewAvatar(imageLink) {
-        return fetch(userUrl + '/avatar', {
+        return fetch(this.avatarUrl, {
             method: 'PATCH',
             headers: {
-                'authorization': authToken,
+                'authorization': this.authToken,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 avatar: imageLink.avatar_link
             })
-        }).catch((err) => {
-            console.log(err);
         });
     }
 }
