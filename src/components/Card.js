@@ -1,5 +1,3 @@
-// import { userId } from '../utils/api_config.js';
-
 export class Card {
     constructor(item, apiCaller, handleCardClick, handleDeleteClick) {
         this._title = item.name;
