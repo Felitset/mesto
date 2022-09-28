@@ -1,7 +1,8 @@
 export class UserInfoOperator {
-    constructor({name, profession}) {
+    constructor({name, profession}, avatarContainer) {
       this.name = name;
       this.profession = profession;
+      this.avatarContainer = avatarContainer
     };
 
     getUserInfo() {
@@ -14,5 +15,8 @@ export class UserInfoOperator {
       this.profession.textContent = item.profession;
     }
 
+    setUserAvatar(link){
+      this.avatarContainer.src = link
+    }
     
 }

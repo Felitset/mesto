@@ -18,4 +18,8 @@ export class Section {
       this.containerSelector.prepend(element)
     })
   }
+
+  addNewElementOnPage(element){
+    this.containerSelector.prepend(element)
+  }
 }

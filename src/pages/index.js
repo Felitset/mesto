@@ -34,15 +34,43 @@ import { UserInfoOperator } from '../components/UserInfoOperator.js';
 import { Api } from '../components/Api.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js'
 const apiCaller = new Api(apiHost, authToken);
-let userId = ''
-Promise.all([apiCaller.getUserId()])
-  .then(() => {
-    userId = apiCaller.userId
+//class elements creation (UserInfoOperator and Section)
+const userInfoOperator = new UserInfoOperator({
+  name: finalName,
+  profession: finalJob
+},
+profileAvatar)
+
+const cardSetter = new Section(
+  createCard,
+  gallerySpace)
+
+  apiCaller.getUser()
+  .then((getUserResult) => {
+    return getUserResult.json();
   }
   )
+  .then((user)=>{
+    return user
+  })
+  .then((user)=>{
+    userInfoOperator.setUserAvatar(user.avatar)
+    apiCaller.userId = user._id
+  })
   .catch((err) => {
     console.log(err);
   })
+
+// let userId = ''
+// Promise.all([apiCaller.getUserId()])
+//   .then(() => {
+//     userId = apiCaller.userId
+//   }
+//   )
+
+//   .catch((err) => {
+//     console.log(err);
+//   })
 
 //create popups
 const addCardPopup = new PopupWithForm(popupAddCardElement,
@@ -103,13 +131,15 @@ function addCardSubmitHandler(evt, placeInfo) {
   savedCard.then((res) => {
     return res.json();
   }).then((data) => {
-    const placeInfoExt = Object.assign({}, placeInfo, {
-      likes_number: 0,
-      card_id: data._id,
-      users_like_flag: 0,
-      owner_id: userId
-    })
-    cardSetter.addItem(cardSetter.renderer(placeInfoExt))
+    const placeInfoExt =  {
+      name: placeInfo.card_title,
+      link: placeInfo.image_link,
+      likes: [],
+      _id: data._id,
+      owner:{_id: apiCaller.userId}
+    }
+    
+    cardSetter.addNewElementOnPage(cardSetter.renderer(placeInfoExt))
 
   })
     .catch((err) => {
@@ -120,9 +150,13 @@ function addCardSubmitHandler(evt, placeInfo) {
     })
 }
 
+
+
+
 function editAvatarImageHandler(evt, imageLink) {
   evt.preventDefault();
-  profileAvatar.src = imageLink.avatar_link;
+  userInfoOperator.setUserAvatar(imageLink.avatar_link)
+
   avatarPopup.changeSubmitButtonText('Сохранение...')
 
   apiCaller.postNewAvatar(imageLink)
@@ -171,16 +205,6 @@ function createCard(item) {
   const cardElement = card.generateCard();
   return cardElement;
 }
-
-//class elements creation (UserInfoOperator and Section)
-const userInfoOperator = new UserInfoOperator({
-  name: finalName,
-  profession: finalJob
-})
-
-const cardSetter = new Section(
-  createCard,
-  gallerySpace)
 
 function drawCardsFromAPI() {
   apiCaller.getAllCards()
