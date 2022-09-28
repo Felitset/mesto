@@ -36,13 +36,13 @@ import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js'
 const apiCaller = new Api(apiHost, authToken);
 let userId = ''
 Promise.all([apiCaller.getUserId()])
-.then(()=>{
-   userId=apiCaller.userId
-}
-)
-.catch((err)=>{ 
-  console.log(err);
-}) 
+  .then(() => {
+    userId = apiCaller.userId
+  }
+  )
+  .catch((err) => {
+    console.log(err);
+  })
 
 //create popups
 const addCardPopup = new PopupWithForm(popupAddCardElement,
@@ -88,9 +88,9 @@ function editProfileSubmitHandler(evt, userInfo) {
   profilePopup.changeSubmitButtonText('Сохранение...');
 
   apiCaller.saveUser(userInfo)
-  .catch((err)=>{ 
-    console.log(err);
-  })
+    .catch((err) => {
+      console.log(err);
+    })
     .finally(() => {
       profilePopup.changeSubmitButtonText('Сохранить')
     })
@@ -112,9 +112,9 @@ function addCardSubmitHandler(evt, placeInfo) {
     cardSetter.addItem(cardSetter.renderer(placeInfoExt))
 
   })
-  .catch((err)=>{ 
-    console.log(err);
-  })
+    .catch((err) => {
+      console.log(err);
+    })
     .finally(() => {
       addCardPopup.changeSubmitButtonText('Сохранить')
     })
@@ -126,7 +126,7 @@ function editAvatarImageHandler(evt, imageLink) {
   avatarPopup.changeSubmitButtonText('Сохранение...')
 
   apiCaller.postNewAvatar(imageLink)
-    .catch((err)=>{ 
+    .catch((err) => {
       console.log(err);
     })
     .finally(() => {
@@ -158,7 +158,7 @@ function createCard(item) {
             card.deleteCard();
             popupConfirmDeletion.closePopup();
           })
-          .catch((err)=>{ 
+          .catch((err) => {
             console.log(err);
           })
           .finally(() => {
@@ -178,7 +178,9 @@ const userInfoOperator = new UserInfoOperator({
   profession: finalJob
 })
 
-let cardSetter;
+const cardSetter = new Section(
+  createCard,
+  gallerySpace)
 
 function drawCardsFromAPI() {
   apiCaller.getAllCards()
@@ -186,33 +188,20 @@ function drawCardsFromAPI() {
       return res.json();
     })
     .then((cards) => {
-      let placesInfo = [];
-      cards.forEach((singleCard) => {
-        placesInfo.push({
-          card_title: singleCard.name,
-          image_link: singleCard.link,
-          likes: singleCard.likes,
-          card_id: singleCard._id,
-          owner_id: singleCard.owner._id
-        });
-      })
-      cardSetter = new Section({
-        items: placesInfo,
-        renderer: createCard
-      },
-        gallerySpace)
-      return cardSetter
+      return cards
     }
     )
-    .then((cardSetter) => {
-      cardSetter.createAllElements();
+    .then((cards) => {
+      cardSetter.renderAllElements(cards);
+      cardSetter.addElementsOnPage();
     })
-    .catch((err)=>{ 
+    .catch((err) => {
       console.log(err);
     })
 };
 
 drawCardsFromAPI();
+
 
 // Validation for input lines
 const addCardValidator = new FormValidator(validationConfig, addCardForm);
@@ -238,7 +227,7 @@ function setDefaultNameProfession() {
       }
       userInfoOperator.setUserInfo(userDefaultInfo);
     })
-    .catch((err)=>{ 
+    .catch((err) => {
       console.log(err);
     })
 }

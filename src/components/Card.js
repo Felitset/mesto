@@ -2,10 +2,10 @@
 
 export class Card {
     constructor(item, apiCaller, handleCardClick, handleDeleteClick) {
-        this._title = item.card_title;
-        this._image = item.image_link;
-        this.cardId = item.card_id;
-        this._ownerId = item.owner_id;
+        this._title = item.name;
+        this._image = item.link;
+        this.cardId = item._id;
+        this._ownerId = item.owner._id;
         this._likes  = item.likes;
         this._likesNumber = this._likes.length;
         this._apiCaller = apiCaller;
@@ -14,6 +14,7 @@ export class Card {
 
         this._handleCardClick = handleCardClick;
         this._handleDeleteClick = handleDeleteClick;
+        
     }
 
     _getTemplate() {
