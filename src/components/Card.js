@@ -6,9 +6,11 @@ export class Card {
         this._image = item.image_link;
         this.cardId = item.card_id;
         this._ownerId = item.owner_id;
-        this._likesNumber = item.likes_number;
-        this._userLikeFlag = item.user_like_flag;
+        this._likes  = item.likes;
+        this._likesNumber = this._likes.length;
         this._apiCaller = apiCaller;
+
+        this._getUserLikeFlag();
 
         this._handleCardClick = handleCardClick;
         this._handleDeleteClick = handleDeleteClick;
@@ -21,6 +23,17 @@ export class Card {
             .querySelector('.gallery__item')
             .cloneNode(true);
         return cardElement;
+    }
+
+    _getUserLikeFlag() {
+        this._userLikeFlag = 0;
+        this._userId=this._apiCaller.userId
+        this._likes.forEach((like) => {
+          searchMyLike: if (like._id == this._userId) {
+            this._userLikeFlag = 1;
+            break searchMyLike;
+          };
+        });
     }
 
     _setLikesOnCard() {
@@ -38,7 +51,7 @@ export class Card {
         this._setEventListeners();
         this._manageDeleteButton();
         if (this._userLikeFlag == 1) {
-            this._changeHeart()
+            this._changeHeart();
         };
         return this._element;
     }

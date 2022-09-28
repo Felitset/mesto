@@ -13,4 +13,6 @@ export class UserInfoOperator {
       this.name.textContent = item.name;
       this.profession.textContent = item.profession;
     }
+
+    
 }

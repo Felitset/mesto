@@ -178,7 +178,7 @@ const userInfoOperator = new UserInfoOperator({
   profession: finalJob
 })
 
-var cardSetter;
+let cardSetter;
 
 function drawCardsFromAPI() {
   apiCaller.getAllCards()
@@ -187,22 +187,13 @@ function drawCardsFromAPI() {
     })
     .then((cards) => {
       let placesInfo = [];
-      cards.forEach((singleItem) => {
-        let user_like_flag = 0;
-        singleItem.likes.forEach((like) => {
-          searchMyLike: if (like._id == userId) {
-            user_like_flag = 1;
-            break searchMyLike;
-          };
-        });
-
+      cards.forEach((singleCard) => {
         placesInfo.push({
-          card_title: singleItem.name,
-          image_link: singleItem.link,
-          likes_number: singleItem.likes.length,
-          card_id: singleItem._id,
-          user_like_flag: user_like_flag,
-          owner_id: singleItem.owner._id
+          card_title: singleCard.name,
+          image_link: singleCard.link,
+          likes: singleCard.likes,
+          card_id: singleCard._id,
+          owner_id: singleCard.owner._id
         });
       })
       cardSetter = new Section({
