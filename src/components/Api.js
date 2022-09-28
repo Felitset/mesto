@@ -9,23 +9,14 @@ export class Api {
 
     }
 
-    getUserId() {
-        return this.getUser()
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                this.userId = data._id
-            });
-    }
-
     saveRemoteLike(cardId) {
         fetch(this.cardUrl + '/' + cardId + '/likes', {
             method: 'PUT',
             headers: {
                 'authorization': this.authToken
             }
-        });
+        })
+            .then(this._checkResponse);
     }
 
     deleteRemoteLike(cardId) {
@@ -34,7 +25,8 @@ export class Api {
             headers: {
                 'authorization': this.authToken
             }
-        });
+        })
+            .then(this._checkResponse);
     }
 
     saveUser(userInfo) {
@@ -48,7 +40,8 @@ export class Api {
                 name: userInfo.name,
                 about: userInfo.profession
             })
-        });
+        })
+            .then(this._checkResponse);
     }
 
     getUser() {
@@ -57,7 +50,8 @@ export class Api {
             headers: {
                 'authorization': this.authToken
             }
-        });
+        })
+            .then(this._checkResponse);
     }
 
     saveCard(placeInfo) {
@@ -71,7 +65,8 @@ export class Api {
                 name: placeInfo.card_title,
                 link: placeInfo.image_link
             })
-        });
+        })
+            .then(this._checkResponse);
     }
 
     deleteCard(cardId) {
@@ -82,7 +77,8 @@ export class Api {
                     'authorization': this.authToken,
                     'Content-Type': 'application/json'
                 }
-            });
+            })
+            .then(this._checkResponse);
     }
 
     getAllCards() {
@@ -91,7 +87,8 @@ export class Api {
             headers: {
                 'authorization': this.authToken
             }
-        });
+        })
+            .then(this._checkResponse);
     }
 
     postNewAvatar(imageLink) {
@@ -104,10 +101,15 @@ export class Api {
             body: JSON.stringify({
                 avatar: imageLink.avatar_link
             })
-        });
+        })
+            .then(this._checkResponse);
     }
 
-    checkForError() {
-
+    _checkResponse(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
     }
+
 }

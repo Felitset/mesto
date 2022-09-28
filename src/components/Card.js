@@ -6,7 +6,7 @@ export class Card {
         this._image = item.link;
         this.cardId = item._id;
         this._ownerId = item.owner._id;
-        this._likes  = item.likes;
+        this._likes = item.likes;
         this._likesNumber = this._likes.length;
         this._apiCaller = apiCaller;
 
@@ -14,7 +14,6 @@ export class Card {
 
         this._handleCardClick = handleCardClick;
         this._handleDeleteClick = handleDeleteClick;
-        
     }
 
     _getTemplate() {
@@ -28,12 +27,12 @@ export class Card {
 
     _getUserLikeFlag() {
         this._userLikeFlag = 0;
-        this._userId=this._apiCaller.userId
+        this._userId = this._apiCaller.userId
         this._likes.forEach((like) => {
-          searchMyLike: if (like._id == this._userId) {
-            this._userLikeFlag = 1;
-            break searchMyLike;
-          };
+            searchMyLike: if (like._id == this._userId) {
+                this._userLikeFlag = 1;
+                break searchMyLike;
+            };
         });
     }
 

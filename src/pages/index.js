@@ -39,38 +39,23 @@ const userInfoOperator = new UserInfoOperator({
   name: finalName,
   profession: finalJob
 },
-profileAvatar)
+  profileAvatar)
 
 const cardSetter = new Section(
   createCard,
   gallerySpace)
 
-  apiCaller.getUser()
-  .then((getUserResult) => {
-    return getUserResult.json();
-  }
-  )
-  .then((user)=>{
+apiCaller.getUser()
+  .then((user) => {
     return user
   })
-  .then((user)=>{
+  .then((user) => {
     userInfoOperator.setUserAvatar(user.avatar)
     apiCaller.userId = user._id
   })
   .catch((err) => {
     console.log(err);
   })
-
-// let userId = ''
-// Promise.all([apiCaller.getUserId()])
-//   .then(() => {
-//     userId = apiCaller.userId
-//   }
-//   )
-
-//   .catch((err) => {
-//     console.log(err);
-//   })
 
 //create popups
 const addCardPopup = new PopupWithForm(popupAddCardElement,
@@ -127,21 +112,19 @@ function editProfileSubmitHandler(evt, userInfo) {
 function addCardSubmitHandler(evt, placeInfo) {
   evt.preventDefault();
   addCardPopup.changeSubmitButtonText('Сохранение...')
-  const savedCard = apiCaller.saveCard(placeInfo)
-  savedCard.then((res) => {
-    return res.json();
-  }).then((data) => {
-    const placeInfoExt =  {
-      name: placeInfo.card_title,
-      link: placeInfo.image_link,
-      likes: [],
-      _id: data._id,
-      owner:{_id: apiCaller.userId}
-    }
-    
-    cardSetter.addNewElementOnPage(cardSetter.renderer(placeInfoExt))
+  apiCaller.saveCard(placeInfo)
+    .then((data) => {
+      const placeInfoExt = {
+        name: placeInfo.card_title,
+        link: placeInfo.image_link,
+        likes: [],
+        _id: data._id,
+        owner: { _id: apiCaller.userId }
+      }
 
-  })
+      cardSetter.addNewElementOnPage(cardSetter.renderer(placeInfoExt))
+
+    })
     .catch((err) => {
       console.log(err);
     })
@@ -208,9 +191,6 @@ function createCard(item) {
 
 function drawCardsFromAPI() {
   apiCaller.getAllCards()
-    .then((res) => {
-      return res.json();
-    })
     .then((cards) => {
       return cards
     }
@@ -241,9 +221,6 @@ let userDefaultInfo = {};
 
 function setDefaultNameProfession() {
   apiCaller.getUser()
-    .then((res) => {
-      return res.json();
-    })
     .then((data) => {
       userDefaultInfo = {
         name: data.name,
