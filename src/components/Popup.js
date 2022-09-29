@@ -35,10 +35,6 @@ export class Popup {
         };
     }
 
-    changeSubmitButtonText(text) {
-        this.button.textContent = text
-    }
-
     setEventListeners() {
         this.closeButtonElement.addEventListener('click', this.closePopup);
         this.popupSelector.addEventListener('click', this._handleOverlayClose);

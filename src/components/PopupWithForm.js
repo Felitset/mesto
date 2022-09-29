@@ -40,6 +40,10 @@ export class PopupWithForm extends Popup {
     this.submitHandler(evt, inputValues)
   }
 
+  changeSubmitButtonText(text) {
+    this.submitButton.textContent = text
+}
+
   setEventListeners() {
     super.setEventListeners();
     this.popupSelector.addEventListener("submit",

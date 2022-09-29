@@ -22,7 +22,6 @@ export const profileAvatar = document.querySelector(".profile__avatar");
 export const popupProfileElement = document.querySelector(".popup-profile-edit");
 export const editProfileForm = popupProfileElement.querySelector(selectors.popupInputForm);
 
-
 export const popupAddCardElement = document.querySelector(".popup-add-card");
 export const popupCardImagePreview = document.querySelector(".popup-card-image");
 export const popupAvatarEdit = document.querySelector(".popup-new-avatar");

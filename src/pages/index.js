@@ -32,7 +32,8 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfoOperator } from '../components/UserInfoOperator.js';
 import { Api } from '../components/Api.js';
-import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js'
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
+
 const apiCaller = new Api(apiHost, authToken);
 //class elements creation (UserInfoOperator and Section)
 const userInfoOperator = new UserInfoOperator({
@@ -44,18 +45,6 @@ const userInfoOperator = new UserInfoOperator({
 const cardSetter = new Section(
   createCard,
   gallerySpace)
-
-apiCaller.getUser()
-  .then((user) => {
-    return user
-  })
-  .then((user) => {
-    userInfoOperator.setUserAvatar(user.avatar)
-    apiCaller.userId = user._id
-  })
-  .catch((err) => {
-    console.log(err);
-  })
 
 //create popups
 const addCardPopup = new PopupWithForm(popupAddCardElement,
@@ -133,9 +122,6 @@ function addCardSubmitHandler(evt, placeInfo) {
     })
 }
 
-
-
-
 function editAvatarImageHandler(evt, imageLink) {
   evt.preventDefault();
   userInfoOperator.setUserAvatar(imageLink.avatar_link)
@@ -169,7 +155,6 @@ function createCard(item) {
     },
     () => {
       popupConfirmDeletion.setSubmitHandler(() => {
-        popupConfirmDeletion.changeSubmitButtonText('Удаление...');
         apiCaller.deleteCard(item._id)
           .then(() => {
             card.deleteCard();
@@ -177,9 +162,6 @@ function createCard(item) {
           })
           .catch((err) => {
             console.log(err);
-          })
-          .finally(() => {
-            popupConfirmDeletion.changeSubmitButtonText('Да');
           })
       });
       popupConfirmDeletion.openPopup();
@@ -190,12 +172,17 @@ function createCard(item) {
 }
 
 function drawCardsFromAPI() {
-  apiCaller.getAllCards()
-    .then((cards) => {
-      return cards
+  Promise.all([apiCaller.getUser(), apiCaller.getAllCards()])
+    .then((values) => {
+      return values
     }
     )
-    .then((cards) => {
+    .then((values) => {
+      const user = values[0]
+      const cards = values[1]
+
+      apiCaller.userId = user._id
+
       cardSetter.renderAllElements(cards);
       cardSetter.addElementsOnPage();
     })
@@ -203,9 +190,6 @@ function drawCardsFromAPI() {
       console.log(err);
     })
 };
-
-drawCardsFromAPI();
-
 
 // Validation for input lines
 const addCardValidator = new FormValidator(validationConfig, addCardForm);
@@ -219,7 +203,7 @@ editAvatarValidator.enableValidation();
 
 let userDefaultInfo = {};
 
-function setDefaultNameProfession() {
+function setDefaultPersonalInfo() {
   apiCaller.getUser()
     .then((data) => {
       userDefaultInfo = {
@@ -227,12 +211,13 @@ function setDefaultNameProfession() {
         profession: data.about
       }
       userInfoOperator.setUserInfo(userDefaultInfo);
+      userInfoOperator.setUserAvatar(data.avatar)
     })
     .catch((err) => {
       console.log(err);
     })
 }
 
-setDefaultNameProfession()
-
+setDefaultPersonalInfo();
+drawCardsFromAPI();
 
