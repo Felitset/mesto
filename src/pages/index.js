@@ -170,7 +170,7 @@ function createCard(item) {
     () => {
       popupConfirmDeletion.setSubmitHandler(() => {
         popupConfirmDeletion.changeSubmitButtonText('Удаление...');
-        apiCaller.deleteCard(item.card_id)
+        apiCaller.deleteCard(item._id)
           .then(() => {
             card.deleteCard();
             popupConfirmDeletion.closePopup();
