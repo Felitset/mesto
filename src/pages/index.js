@@ -86,23 +86,28 @@ function openEditAvatarPopup() {
 //submit popups
 function editProfileSubmitHandler(evt, userInfo) {
   evt.preventDefault();
-  userInfoOperator.setUserInfo(userInfo);
   profilePopup.changeSubmitButtonText('Сохранение...');
 
   apiCaller.saveUser(userInfo)
+    .then(() => {
+      userInfoOperator.setUserInfo(userInfo);
+      profilePopup.closePopup();
+    })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      profilePopup.changeSubmitButtonText('Сохранить')
+      profilePopup.changeSubmitButtonText('Сохранить');
     })
 }
 
 function addCardSubmitHandler(evt, placeInfo) {
   evt.preventDefault();
   addCardPopup.changeSubmitButtonText('Сохранение...')
+
   apiCaller.saveCard(placeInfo)
     .then((data) => {
+
       const placeInfoExt = {
         name: placeInfo.card_title,
         link: placeInfo.image_link,
@@ -111,8 +116,8 @@ function addCardSubmitHandler(evt, placeInfo) {
         owner: { _id: apiCaller.userId }
       }
 
-      cardSetter.addNewElementOnPage(cardSetter.renderer(placeInfoExt))
-
+      cardSetter.addNewElementOnPage(placeInfoExt)
+      addCardPopup.closePopup()
     })
     .catch((err) => {
       console.log(err);
@@ -124,11 +129,13 @@ function addCardSubmitHandler(evt, placeInfo) {
 
 function editAvatarImageHandler(evt, imageLink) {
   evt.preventDefault();
-  userInfoOperator.setUserAvatar(imageLink.avatar_link)
-
   avatarPopup.changeSubmitButtonText('Сохранение...')
 
   apiCaller.postNewAvatar(imageLink)
+    .then(() => {
+      userInfoOperator.setUserAvatar(imageLink.avatar_link)
+      avatarPopup.closePopup()
+    })
     .catch((err) => {
       console.log(err);
     })
@@ -143,14 +150,14 @@ popupAddCardButtonElement.addEventListener("click", openAddCardPopup);
 editAvatarButton.addEventListener("click", openEditAvatarPopup);
 
 //class element Card creation
-function createCard(item) {
+function createCard(item, container) {
   const card = new Card(
     item,
     apiCaller,
     () => {
       popupWithImage.openPopup({
-        image: item.image_link,
-        title: item.card_title
+        image: item.link,
+        title: item.name
       })
     },
     () => {
@@ -168,23 +175,31 @@ function createCard(item) {
     }
   );
   const cardElement = card.generateCard();
-  return cardElement;
+  container.prepend(cardElement)
 }
 
-function drawCardsFromAPI() {
+function drawCardsAndUserFromAPI() {
   Promise.all([apiCaller.getUser(), apiCaller.getAllCards()])
     .then((values) => {
       return values
     }
     )
     .then((values) => {
-      const user = values[0]
-      const cards = values[1]
+      const [user, cards] = values;
 
+      //  сохраняем id пользователя
       apiCaller.userId = user._id
 
+      // отрисовываем информацию пользователя и аватар
+      userDefaultInfo = {
+        name: user.name,
+        profession: user.about
+      }
+      userInfoOperator.setUserInfo(userDefaultInfo);
+      userInfoOperator.setUserAvatar(user.avatar)
+
+      // отрисовываем карточки
       cardSetter.renderAllElements(cards);
-      cardSetter.addElementsOnPage();
     })
     .catch((err) => {
       console.log(err);
@@ -203,21 +218,5 @@ editAvatarValidator.enableValidation();
 
 let userDefaultInfo = {};
 
-function setDefaultPersonalInfo() {
-  apiCaller.getUser()
-    .then((data) => {
-      userDefaultInfo = {
-        name: data.name,
-        profession: data.about
-      }
-      userInfoOperator.setUserInfo(userDefaultInfo);
-      userInfoOperator.setUserAvatar(data.avatar)
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-}
-
-setDefaultPersonalInfo();
-drawCardsFromAPI();
+drawCardsAndUserFromAPI();
 

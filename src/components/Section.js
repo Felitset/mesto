@@ -8,18 +8,11 @@ export class Section {
     this._renderedElements = []
 
     elements.forEach(element => {
-      this._renderedElements.push(this.renderer(element))
+      this.renderer(element, this.containerSelector)
     });
-
   }
 
-  addElementsOnPage() {
-    this._renderedElements.forEach(element => {
-      this.containerSelector.prepend(element)
-    })
-  }
-
-  addNewElementOnPage(element){
-    this.containerSelector.prepend(element)
+  addNewElementOnPage(element) {
+    this.renderer(element, this.containerSelector)
   }
 }

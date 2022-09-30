@@ -10,7 +10,7 @@ export class Api {
     }
 
     saveRemoteLike(cardId) {
-        fetch(this.cardUrl + '/' + cardId + '/likes', {
+        return fetch(this.cardUrl + '/' + cardId + '/likes', {
             method: 'PUT',
             headers: {
                 'authorization': this.authToken
@@ -20,7 +20,7 @@ export class Api {
     }
 
     deleteRemoteLike(cardId) {
-        fetch(this.cardUrl + '/' + cardId + '/likes', {
+        return fetch(this.cardUrl + '/' + cardId + '/likes', {
             method: 'DELETE',
             headers: {
                 'authorization': this.authToken
